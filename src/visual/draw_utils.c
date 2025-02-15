@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:16:43 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/15 15:36:49 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/02/16 00:10:08 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,20 @@ void put_pixel(int x, int y, int color, t_cub3d *cub3d)
 
 void draw_square(int x, int y, int size, int color, t_cub3d *cub3d)
 {
-    for(int i = 0; i < size; i++)
-        put_pixel(x + i, y, color, cub3d);
-    for(int i = 0; i < size; i++)
-        put_pixel(x, y + i, color, cub3d);
-    for(int i = 0; i < size; i++)
-        put_pixel(x + size, y + i, color, cub3d);
-    for(int i = 0; i < size; i++)
-        put_pixel(x + i, y + size, color, cub3d);
+    int i;
+    int j;
+
+    i = 0;
+    while (i < size)
+    {
+        j = 0;
+        while (j < size)
+        {
+            put_pixel(x + i, y + j, color, cub3d);
+            j++;
+        }
+        i++;
+    }
 }
 
 void ft_mlx_clear_image(t_cub3d *cub3d)
@@ -47,5 +53,5 @@ void draw_map(t_cub3d *game)
     for(int y = 0; map[y]; y++)
         for(int x = 0; map[y][x]; x++)
             if(map[y][x] == '1')
-                draw_square(x * BLOCK + 30, y * BLOCK+ 30, BLOCK, color, game);
+                draw_square(x * MINIMAP_SCALE + 30, y * MINIMAP_SCALE+ 30, MINIMAP_SCALE, color, game);
 }

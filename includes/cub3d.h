@@ -32,7 +32,6 @@
 #include "define.h"
 #include "structs.h"
 #include "visuals.h"
-#include "player.h"
 
 
 #endif

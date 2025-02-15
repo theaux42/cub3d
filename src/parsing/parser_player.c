@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:04:55 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/15 18:43:33 by theaux           ###   ########.fr       */
+/*   Updated: 2025/02/15 19:13:31 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ bool    init_player(char **map, t_player *player)
         {
             if (map[i][j] == 'N')
             {
-                player->x = (double)j;
-                player->y = (double)i;
-                ft_printf("X = %i, Y = %i", i, j);
-                printf("Player has been found at : x=%f -y= %f", player->x, player->y);
+                player->x = (((float)j + 1) * (BLOCK) + (BLOCK / 2));
+                player->y = (((float)i + 1) * (BLOCK) + (BLOCK / 2));
                 return (false);
             }
             j++;

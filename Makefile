@@ -10,7 +10,7 @@ LIBS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
 MAIN_FILE = main.c
 UTILS_FILES = colors.c free.c
 PARSING_FILES = parser.c parser_settings.c parser_utils.c parser_map.c parser_player.c init.c
-PLAYER_FILES = player.c
+PLAYER_FILES = player.c player_raycast.c 
 VISUAL_FILES = draw_utils.c
 
 PARSING = $(addprefix src/parsing/, $(PARSING_FILES))

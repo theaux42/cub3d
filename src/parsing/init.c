@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:22:51 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/15 03:50:08 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/02/15 19:20:19 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ t_cub3d *empty_cub3d(void)
     cub3d->win = NULL;
     cub3d->img = NULL;
     cub3d->fd = -1;
-    cub3d->player.x = 0.0;
-    cub3d->player.y = 0.0;
-    cub3d->player.dir = 0.0;
-    cub3d->player.fov = 60.0;
     cub3d->map.map = NULL;
     cub3d->map.textures[NO_TEXTURE] = NULL;
     cub3d->map.textures[SO_TEXTURE] = NULL;
