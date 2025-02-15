@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:15:30 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/15 15:42:46 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/02/15 18:51:21 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,47 +22,47 @@ void    empty_player(t_player *player)
     player->rotate_right = false;
 }
 
-int	on_key_press(int key, t_cub3d *cub3d)
+int	on_key_press(int key, t_player *player)
 {
     if (key == LEFT)
-        cub3d->player.left = true;
+        player->left = true;
     else if (key == RIGHT)
-        cub3d->player.right = true;
+        player->right = true;
     else if (key == UP)
-        cub3d->player.up = true;
+        player->up = true;
     else if (key == DOWN)
-        cub3d->player.down = true;
-    if (key == UP)
-    {
-    }
+        player->down = true;
+    else if (key == SHIFT)
+        player->sprint = true;
     return (0);
 }
 
-int	on_key_release(int key, t_cub3d *cub3d)
+int	on_key_release(int key, t_player *player)
 {
-    ft_printf("key has been released : %i\n", key);
     if (key == LEFT)
-        cub3d->player.left = false;
+        player->left = false;
     else if (key == RIGHT)
-        cub3d->player.right = false;
+        player->right = false;
     else if (key == UP)
-        cub3d->player.up = false;
+        player->up = false;
     else if (key == DOWN)
-        cub3d->player.down = false;
+        player->down = false;
+    else if (key == SHIFT)
+        player->sprint = false;
     return (0);
 }
 
 void move_player(t_player *player)
 {
+    int SPEED = PLAYER_SPEED;
+    if (!player->sprint)
+        SPEED /= 1.25;
     if (player->up)
-        ft_printf("player is going to move");
-    if (player->up)
-        player->y -= PLAYER_SPEED;
+        player->y -= SPEED;
     if (player->down)
-        player->y += PLAYER_SPEED;
+        player->y += SPEED;
     if (player->left)
-        player->x -= PLAYER_SPEED;
+        player->x -= SPEED;
     if (player->right)
-        player->x += PLAYER_SPEED;
-    
+        player->x += SPEED;
 }

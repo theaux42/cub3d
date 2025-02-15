@@ -29,7 +29,7 @@ bool    init_parsing(t_cub3d *cub3d)
     print_settings(cub3d);
     if (parse_map(cub3d))
         return (true);
-    if (init_player(cub3d))
+    if (init_player(cub3d->map.map, &cub3d->player))
         return (true);
     return (false);
 }

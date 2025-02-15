@@ -27,6 +27,8 @@ typedef struct  s_player
     bool        right;
     bool        down;
 
+    bool        sprint;
+
     bool        rotate_left;
     bool        rotate_right;
 }               t_player;

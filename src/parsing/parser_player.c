@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:04:55 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/15 15:32:19 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/02/15 18:43:33 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@
 //     double      fov;
 // }               t_player;
 
-bool    init_player(t_cub3d *cub3d)
+bool    init_player(char **map, t_player *player)
 {
     int i;
     int j;
 
     i = 0;
     j = 0;
-    empty_player(&cub3d->player);
-    while (cub3d->map.map[i])
+    empty_player(player);
+    while (map[i])
     {
-        while (cub3d->map.map[i][j])
+        while (map[i][j])
         {
-            if (cub3d->map.map[i][j] == 'N')
+            if (map[i][j] == 'N')
             {
-                cub3d->player.x = (double)j;
-                cub3d->player.y = (double)i;
+                player->x = (double)j;
+                player->y = (double)i;
                 ft_printf("X = %i, Y = %i", i, j);
-                printf("Player has been found at : x=%f -y= %f", cub3d->player.x, cub3d->player.y);
+                printf("Player has been found at : x=%f -y= %f", player->x, player->y);
                 return (false);
             }
             j++;

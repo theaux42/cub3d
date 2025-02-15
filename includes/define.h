@@ -34,7 +34,7 @@ typedef enum e_colors
 
 # define BLOCK 20
 
-# define PLAYER_SPEED 5
+# define PLAYER_SPEED 4
 
 # define W 119
 # define A 97
@@ -45,6 +45,8 @@ typedef enum e_colors
 # define RIGHT 65363
 # define UP 65362
 # define DOWN 65364
+
+# define SHIFT 65505
 
 # define PI 3.14159265359
 
