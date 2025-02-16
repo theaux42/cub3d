@@ -21,6 +21,7 @@ typedef struct  s_player
     float      y;
     float      dir;
     float      fov;
+    float      up_dir;
 
     bool        up;
     bool        left;

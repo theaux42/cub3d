@@ -32,7 +32,7 @@ typedef enum e_colors
 # define WIDTH 1280
 # define HEIGHT 720
 
-# define BLOCK 128
+# define BLOCK 64
 # define MINIMAP_SCALE 10
 
 # define PLAYER_SPEED 10

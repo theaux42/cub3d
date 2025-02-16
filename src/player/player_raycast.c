@@ -6,11 +6,18 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 19:22:37 by theaux            #+#    #+#             */
-/*   Updated: 2025/02/16 00:14:46 by theaux           ###   ########.fr       */
+/*   Updated: 2025/02/16 13:33:45 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+typedef enum {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+} t_wall_dir;
 
 bool    is_touching_wall(float origin_x, float origin_y, char **map)
 {
@@ -25,6 +32,43 @@ bool    is_touching_wall(float origin_x, float origin_y, char **map)
     if (map[y][x] == '1')
         return (true);
     return (false);  
+}
+
+
+/*
+
+ Maintenant chaque mur a une couleur differente ce qui montre bien que
+ chaque mur est detecté et differentie par la fonction tmp_is_touching_wall.
+ un probleme persiste cependant, les murs ne sont pas affichés correctement
+ sa arrive que sur les murs NORTH et SOUTH, les murs WEST et EAST sont bien affichés.
+ Comme si le mur etait fait de block et qu'on voyait la jointure entre eux.
+ 
+*/
+
+bool tmp_is_touching_wall(float origin_x, float origin_y, char **map, t_wall_dir *wall_dir)
+{
+    float offset = BLOCK * 1.5;
+    int x = (int)((origin_x - offset) / BLOCK);
+    int y = (int)((origin_y - offset) / BLOCK);
+    
+    if (x < 0 || y < 0)
+        return true;
+    
+    if (map[y][x] == '1')
+    {
+        // Calculer la position exacte de collision dans la cellule
+        float cell_x = fmod(origin_x - offset, BLOCK);
+        float cell_y = fmod(origin_y - offset, BLOCK);
+        
+        // Déterminer quelle face du mur a été touchée
+        if (cell_x < 1.0) *wall_dir = WEST;
+        else if (cell_x > BLOCK - 1.0) *wall_dir = EAST;
+        else if (cell_y < 1.0) *wall_dir = NORTH;
+        else *wall_dir = SOUTH;
+        
+        return true;
+    }
+    return false;
 }
 
 float distance(float x, float y)
@@ -54,7 +98,9 @@ int get_dist_color(float dist, int col)
     return (red << 16);
 }
 
-void	draw_walls(t_cub3d *cub3d, int col, float ray_x, float ray_y)
+
+// Toucher start_y et end permet de regarder vers le haut et le bas
+void	draw_walls(t_cub3d *cub3d, int col, float ray_x, float ray_y, int color)
 {
     float	dist;
     int		wall_height;
@@ -64,36 +110,45 @@ void	draw_walls(t_cub3d *cub3d, int col, float ray_x, float ray_y)
 
     dist = fixed_dist(ray_x - cub3d->player.x, ray_y - cub3d->player.y, cub3d);
     wall_height = (BLOCK / dist) * (HEIGHT * cub3d->player.fov);
-    start_y = HEIGHT / 2 - wall_height / 2;
-    end = start_y + wall_height;
+    start_y = (HEIGHT / 2 - wall_height / 2);
+    end = (start_y + wall_height);
     y = 0;
     while (y < HEIGHT)
     {
         if (y < start_y)
             put_pixel(col, y, cub3d->map.colors[CEILING], cub3d);  // plafond (gris)
         else if (y >= start_y && y < end)
-            put_pixel(col, y, get_dist_color(dist, col), cub3d);  // mur (vert)
+            put_pixel(col, y, color, cub3d);  // mur (vert)
         else
             put_pixel(col, y, cub3d->map.colors[FLOOR], cub3d);  // sol (gris foncé)
         y++;
     }
 }
 
-void	single_raycast(t_cub3d *cub3d, int col, float angle)
+void single_raycast(t_cub3d *cub3d, int col, float angle)
 {
-    float	cos_angle = cos(angle);
-    float	sin_angle = sin(angle);
-    float	ray_x = cub3d->player.x;
-    float	ray_y = cub3d->player.y;
+    float cos_angle = cos(angle);
+    float sin_angle = sin(angle);
+    float ray_x = cub3d->player.x;
+    float ray_y = cub3d->player.y;
+    t_wall_dir wall_dir;
 
-    while (!is_touching_wall(ray_x, ray_y, cub3d->map.map))
+    while (!tmp_is_touching_wall(ray_x, ray_y, cub3d->map.map, &wall_dir))
     {
-        // Optionnel: dessiner la trajectoire du rayon dans le monde
-        // put_pixel(ray_x, ray_y, 0xFF0000, cub3d);
         ray_x += cos_angle;
         ray_y += sin_angle;
     }
-    draw_walls(cub3d, col, ray_x, ray_y);
+    
+    // Utilisez wall_dir pour choisir la texture ou la couleur appropriée
+    int wall_color;
+    switch (wall_dir) {
+        case NORTH: wall_color = 0xFF0000; break; // Rouge
+        case SOUTH: wall_color = 0x00FF00; break; // Vert
+        case EAST:  wall_color = 0x0000FF; break; // Bleu
+        case WEST:  wall_color = 0xFFFF00; break; // Jaune
+    }
+    
+    draw_walls(cub3d, col, ray_x, ray_y, wall_color);
 }
 
 void	raycast(t_cub3d *cub3d)

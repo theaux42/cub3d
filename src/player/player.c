@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:15:30 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/16 00:03:51 by theaux           ###   ########.fr       */
+/*   Updated: 2025/02/16 13:30:00 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ int	on_key_press(int key, t_player *player)
         player->fov -= 0.1;
     else if (key == PLUS)
         player->fov += 0.1;
+    else if (key == W)
+        player->up_dir += 1;
+    else if (key == S)
+        player->up_dir -= 1;
     return (0);
 }
 
