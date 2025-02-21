@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 19:22:37 by theaux            #+#    #+#             */
-/*   Updated: 2025/02/16 00:14:46 by theaux           ###   ########.fr       */
+/*   Updated: 2025/02/21 16:24:19 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ float fixed_dist(float delta_x, float delta_y, t_cub3d *cub3d)
     return fix_dist;
 }
 
-int get_dist_color(float dist, int col)
+int get_dist_color(float dist)
 {
-    if (col == WIDTH / 2)
-        return 0x00FF00;
     int min_color = 0x010000;
     int max_color = 0xFF0000;
     float max_dist = 1200.0;
@@ -72,7 +70,7 @@ void	draw_walls(t_cub3d *cub3d, int col, float ray_x, float ray_y)
         if (y < start_y)
             put_pixel(col, y, cub3d->map.colors[CEILING], cub3d);  // plafond (gris)
         else if (y >= start_y && y < end)
-            put_pixel(col, y, get_dist_color(dist, col), cub3d);  // mur (vert)
+            put_pixel(col, y, get_dist_color(dist), cub3d);  // mur (vert)
         else
             put_pixel(col, y, cub3d->map.colors[FLOOR], cub3d);  // sol (gris foncé)
         y++;
