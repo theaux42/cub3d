@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:22:51 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/15 19:20:19 by theaux           ###   ########.fr       */
+/*   Updated: 2025/03/21 18:00:44 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ t_cub3d *empty_cub3d(void)
     cub3d->img = NULL;
     cub3d->fd = -1;
     cub3d->map.map = NULL;
-    cub3d->map.textures[NO_TEXTURE] = NULL;
-    cub3d->map.textures[SO_TEXTURE] = NULL;
-    cub3d->map.textures[WE_TEXTURE] = NULL;
-    cub3d->map.textures[EA_TEXTURE] = NULL;
     cub3d->map.colors[0] = -1;
     cub3d->map.colors[1] = -1;
     cub3d->map.width = 0;

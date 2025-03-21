@@ -14,7 +14,6 @@
 
 int render(t_cub3d *cub3d)
 {
-    printf("\rplayer coords : x = %f, y = %f", cub3d->player.x, cub3d->player.y);
     ft_mlx_clear_image(cub3d);
     raycast(cub3d);
     draw_map(cub3d);

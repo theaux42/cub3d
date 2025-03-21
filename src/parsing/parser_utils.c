@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:24 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/14 17:36:27 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/03/21 17:55:04 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool is_finished(t_cub3d *cub3d)
     i = 0;
     while (i < 3)
     {
-        if (cub3d->map.textures[i] == NULL)
+        if (cub3d->map.texture[i].path == NULL)
             return (false);
         i++;
     }

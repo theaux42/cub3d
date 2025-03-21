@@ -33,14 +33,26 @@ typedef struct  s_player
     bool        rotate_right;
 }               t_player;
 
+typedef struct s_texture_struct
+{
+	char        *path;
+	void        *img;
+	char        *data;
+	int         bpp;
+	int         size_line;
+	int         endian;
+	int         width;
+	int         height;
+}               t_texture_struct;
+
 typedef struct  s_map
 {
-    char        **map;
-    char        *textures[4];
-    int         colors[2];    
-    int         width;
-    int         height;
-    int         settings_end;
+    char        		**map;
+	t_texture_struct   	texture[4];
+    int         		colors[2];    
+    int         		width;
+    int         		height;
+    int         		settings_end;
 }               t_map;
 
 typedef struct  s_map_line

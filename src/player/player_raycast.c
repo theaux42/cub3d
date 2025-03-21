@@ -86,8 +86,6 @@ void	single_raycast(t_cub3d *cub3d, int col, float angle)
 
     while (!is_touching_wall(ray_x, ray_y, cub3d->map.map))
     {
-        // Optionnel: dessiner la trajectoire du rayon dans le monde
-        // put_pixel(ray_x, ray_y, 0xFF0000, cub3d);
         ray_x += cos_angle;
         ray_y += sin_angle;
     }

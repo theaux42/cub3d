@@ -62,5 +62,6 @@ typedef enum e_colors
 # define ERR_EXIST ERR_MSG "This value is being define twice!\n"
 # define ERR_COLOR_FORMAT ERR_MSG "A color is wrongly formatted\n."
 # define ERR_NO_PLAYER ERR_MSG "There is no player on the map.\n"
+# define ERR_TEXTURE ERR_MSG "Texture %s not found.\n"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 00:30:54 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/14 20:43:18 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/03/21 17:55:28 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void free_cub3d(t_cub3d *cub3d)
         return;
     while (i < 4)
     {
-        if (cub3d->map.textures[i])
-            free(cub3d->map.textures[i]);
+        if (cub3d->map.texture[i].path)
+            free(cub3d->map.texture[i].path);
         i++;
     }
     ft_freesplit(cub3d->map.map);
