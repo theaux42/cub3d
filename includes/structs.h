@@ -77,4 +77,13 @@ typedef struct s_cub3d
     int         fd;
 }               t_cub3d;
 
+typedef struct s_ray
+{
+    int x;
+    int y;
+    
+    char orientation;
+    bool is_hit;
+} t_ray;
+
 #endif

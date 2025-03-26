@@ -3,15 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 01:50:06 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/16 00:08:47 by theaux           ###   ########.fr       */
+/*   Updated: 2025/03/25 20:55:50 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void show_facing(float angle)
+{
+    if (angle > 0 && angle < PI / 2)
+        ft_printf("NO\r");
+    else if (angle > PI / 2 && angle < PI)
+        ft_printf("SO\r");
+    else if (angle > PI && angle < 3 * PI / 2)
+        ft_printf("EA\r");
+    else if (angle > 3 * PI / 2 && angle < 2 * PI)
+        ft_printf("WE\r");
+}
 int render(t_cub3d *cub3d)
 {
     ft_mlx_clear_image(cub3d);
@@ -44,6 +55,7 @@ int main(int ac, char **av)
     mlx_hook(cub3d->win, 17, 1L<<17, exit_game, cub3d);
     mlx_hook(cub3d->win, 2, 1L<<0, on_key_press, &cub3d->player);
     mlx_hook(cub3d->win, 3, 1L<<1, on_key_release, &cub3d->player);
+    ft_printf("\n\n\n\n\n");
     mlx_loop_hook(cub3d->mlx, render, cub3d);
     mlx_loop(cub3d->mlx);
     free_cub3d(cub3d);

@@ -57,6 +57,7 @@ typedef enum e_colors
 
 # define ERR_MSG "[" RED500 "ERROR" RESET "] ➞ "
 
+# define ERR_MINILIBX ERR_MSG "Something wrong hapenned with MiniLibX...\n"
 # define ERR_MALLOC ERR_MSG "Malloc failed\n"
 # define ERR_NO_ARG ERR_MSG "Wrong usage : %s <map>.\n"
 # define ERR_EXIST ERR_MSG "This value is being define twice!\n"

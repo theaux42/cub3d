@@ -8,7 +8,7 @@ INCLUDES = -I./includes -I$(LIBFT_DIR) -I$(MLX_DIR)
 LIBS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
 
 MAIN_FILE = main.c
-UTILS_FILES = colors.c free.c
+UTILS_FILES = colors.c free.c get_dir.c
 PARSING_FILES = parser.c parser_settings.c parser_texture.c parser_utils.c parser_map.c parser_player.c init.c
 PLAYER_FILES = player.c player_raycast.c 
 VISUAL_FILES = draw_utils.c

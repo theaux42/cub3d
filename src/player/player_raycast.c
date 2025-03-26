@@ -3,28 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   player_raycast.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 19:22:37 by theaux            #+#    #+#             */
-/*   Updated: 2025/02/21 16:24:19 by theaux           ###   ########.fr       */
+/*   Updated: 2025/03/25 20:55:50 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool    is_touching_wall(float origin_x, float origin_y, char **map)
+t_ray    is_touching_wall(float origin_x, float origin_y, char **map)
 {
+    t_ray ray;
+
     float offset = BLOCK * 1.5;
-    int x = (int)((origin_x - offset) / BLOCK);
-    int y = (int)((origin_y - offset) / BLOCK);
+    ray.x = (int)((origin_x - offset) / BLOCK);
+    ray.y = (int)((origin_y - offset) / BLOCK);
+    ray.orientation = 'N';
     
-    // Vérification des limites de la carte
-    if (x < 0 || y < 0)
-        return (true);
+    if (ray.x < 0 || ray.y < 0)
+    {
+        return ((ray.is_hit = true), ray);
+    }
     
-    if (map[y][x] == '1')
-        return (true);
-    return (false);  
+    if (map[ray.y][ray.x] == '1')
+    {
+        return ((ray.is_hit = true), ray);
+    }
+    return ((ray.is_hit = false), ray);  
+}
+
+t_ray is_touching_wall_temp(float origin_x, float origin_y, t_cub3d *cub3d, float ray_angle)
+{
+    t_ray ray;
+    float offset = BLOCK * 1.5;
+    int grid_x = (int)((origin_x - offset) / BLOCK);
+    int grid_y = (int)((origin_y - offset) / BLOCK);
+
+    // If we're out of bounds, consider it a hit.
+    if (grid_x < 0 || grid_y < 0)
+    {
+        ray.orientation = get_wall_orientation(cub3d, origin_x, origin_y, ray_angle);
+        return ((ray.is_hit = true), ray);
+    }
+    // If the grid cell is a wall, determine its orientation.
+    if (cub3d->map.map[grid_y][grid_x] == '1')
+    {
+        ray.orientation = get_wall_orientation(cub3d, origin_x, origin_y, ray_angle);
+        return ((ray.is_hit = true), ray);
+    }
+    return ((ray.is_hit = false), ray);  
 }
 
 float distance(float x, float y)
@@ -39,20 +67,20 @@ float fixed_dist(float delta_x, float delta_y, t_cub3d *cub3d)
     return fix_dist;
 }
 
-int get_dist_color(float dist)
+int get_wall_color(t_ray ray_data)
 {
-    int min_color = 0x010000;
-    int max_color = 0xFF0000;
-    float max_dist = 1200.0;
-    if (dist >= max_dist)
-        return min_color;
-
-    float ratio = dist / max_dist;
-    int red = (int)((1 - ratio) * ((max_color >> 16) & 0xFF) + ratio * ((min_color >> 16) & 0xFF));
-    return (red << 16);
+    if (ray_data.orientation == 'N')
+        return 0x00FF00; // vert
+    if (ray_data.orientation == 'S')
+        return 0x0000FF; // bleu
+    if (ray_data.orientation == 'W')
+        return 0xFF0000; // rouge
+    if (ray_data.orientation == 'E')
+        return 0xFFFF00; // jaune
+    return 0xFFFFFF;
 }
 
-void	draw_walls(t_cub3d *cub3d, int col, float ray_x, float ray_y)
+void	draw_walls(t_cub3d *cub3d, int col, t_ray ray_data, float ray_x, float ray_y)
 {
     float	dist;
     int		wall_height;
@@ -70,27 +98,32 @@ void	draw_walls(t_cub3d *cub3d, int col, float ray_x, float ray_y)
         if (y < start_y)
             put_pixel(col, y, cub3d->map.colors[CEILING], cub3d);  // plafond (gris)
         else if (y >= start_y && y < end)
-            put_pixel(col, y, get_dist_color(dist), cub3d);  // mur (vert)
+            put_pixel(col, y, get_wall_color(ray_data), cub3d);  // mur (vert)
         else
             put_pixel(col, y, cub3d->map.colors[FLOOR], cub3d);  // sol (gris foncé)
         y++;
     }
 }
 
-void	single_raycast(t_cub3d *cub3d, int col, float angle)
+void single_raycast(t_cub3d *cub3d, int col, float angle)
 {
-    float	cos_angle = cos(angle);
-    float	sin_angle = sin(angle);
-    float	ray_x = cub3d->player.x;
-    float	ray_y = cub3d->player.y;
+    float cos_angle = cos(angle);
+    float sin_angle = sin(angle);
+    float ray_x = cub3d->player.x;
+    float ray_y = cub3d->player.y;
+    t_ray ray_data;
 
-    while (!is_touching_wall(ray_x, ray_y, cub3d->map.map))
+    // Pass the ray angle to the wall-check function.
+    ray_data = is_touching_wall_temp(ray_x, ray_y, cub3d, angle);
+    while (!ray_data.is_hit)
     {
         ray_x += cos_angle;
         ray_y += sin_angle;
+        ray_data = is_touching_wall_temp(ray_x, ray_y, cub3d, angle);
     }
-    draw_walls(cub3d, col, ray_x, ray_y);
+    draw_walls(cub3d, col, ray_data, ray_x, ray_y);
 }
+
 
 void	raycast(t_cub3d *cub3d)
 {

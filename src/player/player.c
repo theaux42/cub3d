@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:15:30 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/16 00:03:51 by theaux           ###   ########.fr       */
+/*   Updated: 2025/03/25 20:55:50 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void    move_player(float cos_dir, float sin_dir, int speed, t_player *player, c
     {
         new_x = player->x + cos_dir * speed;
         new_y = player->y + sin_dir * speed;
-        if (!is_touching_wall(new_x, new_y, map))
+        if (!is_touching_wall(new_x, new_y, map).is_hit)
         {
             player->x = new_x;
             player->y = new_y;
@@ -87,17 +87,7 @@ void    move_player(float cos_dir, float sin_dir, int speed, t_player *player, c
     {
         new_x = player->x - cos_dir * speed;
         new_y = player->y - sin_dir * speed;
-        if (!is_touching_wall(new_x, new_y, map))
-        {
-            player->x = new_x;
-            player->y = new_y;
-        }
-    }
-    if (player->left)
-    {
-        new_x = player->x - sin_dir * speed;
-        new_y = player->y + cos_dir * speed;
-        if (!is_touching_wall(new_x, new_y, map))
+        if (!is_touching_wall(new_x, new_y, map).is_hit)
         {
             player->x = new_x;
             player->y = new_y;
@@ -105,9 +95,19 @@ void    move_player(float cos_dir, float sin_dir, int speed, t_player *player, c
     }
     if (player->right)
     {
+        new_x = player->x - sin_dir * speed;
+        new_y = player->y + cos_dir * speed;
+        if (!is_touching_wall(new_x, new_y, map).is_hit)
+        {
+            player->x = new_x;
+            player->y = new_y;
+        }
+    }
+    if (player->left)
+    {
         new_x = player->x + sin_dir * speed;
         new_y = player->y - cos_dir * speed;
-        if (!is_touching_wall(new_x, new_y, map))
+        if (!is_touching_wall(new_x, new_y, map).is_hit)
         {
             player->x = new_x;
             player->y = new_y;
