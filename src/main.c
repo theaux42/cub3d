@@ -31,6 +31,7 @@ int render(t_cub3d *cub3d)
     player_key_handler(&cub3d->player, cub3d->map.map);
     draw_square(cub3d->player.pos.x, cub3d->player.pos.y, 3, 0xFFFF00, cub3d);
     mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img, 0, 0);
+    mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->map.texture[1].img, 0, 0);
     return (0);
 }
 

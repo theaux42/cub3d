@@ -43,7 +43,7 @@ void    perform_dda(t_cub3d *cub3d, t_ray *ray)
 		else
 			ray->hit.facing = WEST;
 		ray->perpWallDist = ray->side_dist.x - ray->delta_dist.x;
-		ray->hit.x_wall = ray->map_pos.y + ray->perpWallDist * ray->dir.y;
+		ray->hit.x_wall = cub3d->player.pos.y + ray->perpWallDist * ray->dir.y;
 	}
 	else 
 	{
@@ -52,8 +52,10 @@ void    perform_dda(t_cub3d *cub3d, t_ray *ray)
 		else
 			ray->hit.facing = NORTH;
 		ray->perpWallDist = ray->side_dist.y - ray->delta_dist.y;
-		ray->hit.x_wall = ray->map_pos.x + ray->perpWallDist * ray->dir.y;
+		ray->hit.x_wall = cub3d->player.pos.x + ray->perpWallDist * ray->dir.x;
 	}
+	ray->hit.pos = ray->map_pos;
+	ray->hit.x_wall -= floor(ray->hit.x_wall);
 	ray->hit.dist = ray->perpWallDist;
 }
 
@@ -73,12 +75,16 @@ int wall_color(t_hit hit)
 void	draw_walls(t_cub3d *cub3d, int x, t_hit hit)
 {
     long long		wall_height;
-    int		start_y;
-    int		end;
-    int		y;
-
+    int				start_y;
+	int				end;
+	int				y;
+	t_vec2 texcoord;
+	t_texture_struct tex = cub3d->map.texture[hit.facing];
+	printf("tex %d %d\n", tex.width, tex.height);
+	unsigned int col;
+	
+	texcoord.x = hit.x_wall * tex.width;
     wall_height = (HEIGHT / hit.dist);
-    // wall_height = (BLOCK / hit.dist) * (HEIGHT * cub3d->player.fov);
     start_y = HEIGHT / 2 - wall_height / 2;
     end = start_y + wall_height;
     y = 0;
@@ -88,13 +94,8 @@ void	draw_walls(t_cub3d *cub3d, int x, t_hit hit)
             put_pixel(x, y, cub3d->map.colors[CEILING], cub3d);  // plafond (gris)
         else if (y >= start_y && y < end)
 		{
-			t_texture_struct tex = cub3d->map.texture[1];
-			t_vec2 texcoord;
-			unsigned int col;
 
-			texcoord.x = hit.x_wall * tex.width;
-			texcoord.y = ((y - start_y) / wall_height) * tex.height;
-			// col = 0x0000FF;
+			texcoord.y = ((double)(y - start_y) / wall_height) * tex.height;
 			col = get_pixel_from_tex(texcoord.x, texcoord.y, tex);
             put_pixel(x, y, col, cub3d);  // mur (vert)
 		}
@@ -163,6 +164,7 @@ void	raycast(t_cub3d *cub3d)
 		ray = (t_ray) {0};
 		perform_calculation(cub3d, &ray, x);
 		perform_dda(cub3d, &ray);
+		printf("x_wall: %f\n", ray.hit.x_wall);
 		draw_walls(cub3d, x, ray.hit);
 		x++;
 	}

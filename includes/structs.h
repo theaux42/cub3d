@@ -81,8 +81,8 @@ typedef enum e_facing
 {
     NORTH,
     SOUTH,
-    EAST,
-    WEST
+    WEST,
+    EAST
 }   t_facing;
 
 typedef struct s_hit

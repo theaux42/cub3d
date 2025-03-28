@@ -47,7 +47,7 @@ typedef enum e_colors
 # define RIGHT 65363
 # define UP 65362
 # define DOWN 65364
-# define ESCAPE 65307
+# define ESCAPE  65307
 # define MINUS 45
 # define PLUS 61
 

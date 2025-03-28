@@ -17,7 +17,7 @@ unsigned int get_pixel_from_tex(int x, int y, t_texture_struct tex)
     unsigned int *img;
     
     if(x >= tex.width || y >= tex.height || x < 0 || y < 0)
-        return (-1);
+        return (0x000000);
     
     img = (unsigned int *)tex.data;
     return (img[y * tex.width + x]);
