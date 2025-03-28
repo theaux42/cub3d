@@ -35,8 +35,8 @@ typedef enum e_colors
 # define BLOCK 128
 # define MINIMAP_SCALE 10
 
-# define PLAYER_SPEED 10
-# define CAMERA_SPEED 0.02
+# define PLAYER_SPEED 0.1
+# define CAMERA_SPEED 0.03
 
 # define W 119
 # define A 97
@@ -47,7 +47,7 @@ typedef enum e_colors
 # define RIGHT 65363
 # define UP 65362
 # define DOWN 65364
-
+# define ESCAPE 65307
 # define MINUS 45
 # define PLUS 61
 

@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:22:51 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/25 17:31:56 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/03/28 02:31:32 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ bool    init_cub3d(t_cub3d *cub3d, char *map_file)
     if (cub3d->fd < 0)
         return (ft_dprintf(2, "%s%s\n", ERR_MSG, strerror(errno)), true);
     if (init_minilibx(cub3d))
+        return (close(cub3d->fd), true);
+    cub3d->ray = (t_ray *)malloc(sizeof(t_ray));
+    if (!cub3d->ray)
         return (close(cub3d->fd), true);
     if (init_parsing(cub3d))
         return (close(cub3d->fd), true);

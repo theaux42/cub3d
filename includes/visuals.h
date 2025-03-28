@@ -25,6 +25,8 @@ void    draw_square(int x, int y, int size, int color, t_cub3d *cub3d);
 void    put_pixel(int x, int y, int color, t_cub3d *cub3d);
 void    draw_map(t_cub3d *cub3d);
 
+unsigned int get_pixel_from_tex(int x, int y, t_texture_struct tex);
+
 char get_wall_orientation(t_cub3d *cub3d, float hitX, float hitY, float ray_angle);
 
 #endif

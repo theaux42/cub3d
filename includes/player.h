@@ -19,11 +19,11 @@
 void    empty_player(t_player *player);
 bool    init_player(char **map, t_player *player);
 
-int     on_key_press(int key, t_player *player);
+int     on_key_press(int key, t_cub3d *cub3d);
 int     on_key_release(int key, t_player *player);
 void    player_key_handler(t_player *player, char **map);
 
-t_ray   is_touching_wall(float origin_x, float origin_y, char **map);
+bool   is_touching_wall(float origin_x, float origin_y, char **map);
 void    raycast(t_cub3d *cub3d);
 
 #endif

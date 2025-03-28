@@ -15,12 +15,26 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+typedef struct s_vec2
+{
+    int x;
+    int y;
+}               t_vec2;
+
+typedef struct s_dvec2
+{
+    double x;
+    double y;
+}               t_dvec2;
+
 typedef struct  s_player
 {
-    float      x;
-    float      y;
-    float      dir;
-    float      fov;
+    t_dvec2     pos;
+    float       angle;
+    float       fov;
+    float       speed;
+
+    t_dvec2     plane;
 
     bool        up;
     bool        left;
@@ -36,8 +50,10 @@ typedef struct  s_player
 typedef struct s_texture_struct
 {
 	char        *path;
-	void        *img;
 	char        *data;
+
+	void        *img;
+
 	int         bpp;
 	int         size_line;
 	int         endian;
@@ -61,29 +77,59 @@ typedef struct  s_map_line
     struct s_map_line  *next;
 }               t_map_line;
 
+typedef enum e_facing
+{
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+}   t_facing;
+
+typedef struct s_hit
+{
+    double		dist;
+    double		x_wall;
+    t_facing	facing;
+    t_vec2		pos;
+    t_dvec2		dir;
+    
+}           t_hit;
+
+typedef struct s_ray
+{
+    t_vec2  map_pos;
+    t_vec2  step; 
+
+    t_dvec2 dir;
+    t_dvec2 side_dist;
+    t_dvec2 delta_dist;
+
+    int		flag; // touch an horinzal or a vertical wall
+
+    bool    is_hit;
+    t_hit	hit;
+
+    double	cameraX;
+    double	perpWallDist;
+    double	wallX;
+}	t_ray;
+
 typedef struct s_cub3d
 {
     void        *mlx;
     void        *win;
     void        *img;
-
+    
     char        *data;
+    
     int         bpp;
+    int         fd;
     int         size_line;
     int         endian;
-
+    
     t_player    player;
     t_map       map;
-    int         fd;
-}               t_cub3d;
-
-typedef struct s_ray
-{
-    int x;
-    int y;
-    
-    char orientation;
-    bool is_hit;
-} t_ray;
+    t_ray       *ray;
+}              t_cub3d;
 
 #endif

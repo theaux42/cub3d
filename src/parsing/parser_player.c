@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:04:55 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/21 17:39:14 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/03/28 05:49:25 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ bool    init_player(char **map, t_player *player)
     {
         while (map[i][j])
         {
-            if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W' || map[i][j] == 'S')
+            if (map[i][j] == 'N' || map[i][j] == 'E' ||
+                map[i][j] == 'W' || map[i][j] == 'S')
             {
-				player->dir = set_player_dir(map[i][j]);
-                player->x = (((float)j + 1) * (BLOCK) + (BLOCK / 2));
-                player->y = (((float)i + 1) * (BLOCK) + (BLOCK / 2));
+                player->angle = set_player_dir(map[i][j]);
+                player->pos.x = (float)j + 0.5f; // Center in the cell
+                player->pos.y = (float)i + 0.5f; // Center in the cell
                 return (false);
             }
             j++;

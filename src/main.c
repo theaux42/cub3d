@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 01:50:06 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/25 20:55:50 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/03/28 02:25:26 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int render(t_cub3d *cub3d)
     raycast(cub3d);
     draw_map(cub3d);
     player_key_handler(&cub3d->player, cub3d->map.map);
-    draw_square(cub3d->player.x, cub3d->player.y, 3, 0xFFFF00, cub3d);
+    draw_square(cub3d->player.pos.x, cub3d->player.pos.y, 3, 0xFFFF00, cub3d);
     mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img, 0, 0);
     return (0);
 }
@@ -51,11 +51,9 @@ int main(int ac, char **av)
         return (1);
     if (init_cub3d(cub3d, av[1]))
         return (1);
-    printf("\n");
     mlx_hook(cub3d->win, 17, 1L<<17, exit_game, cub3d);
-    mlx_hook(cub3d->win, 2, 1L<<0, on_key_press, &cub3d->player);
+    mlx_hook(cub3d->win, 2, 1L<<0, on_key_press, cub3d);
     mlx_hook(cub3d->win, 3, 1L<<1, on_key_release, &cub3d->player);
-    ft_printf("\n\n\n\n\n");
     mlx_loop_hook(cub3d->mlx, render, cub3d);
     mlx_loop(cub3d->mlx);
     free_cub3d(cub3d);

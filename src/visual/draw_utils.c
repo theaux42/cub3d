@@ -12,6 +12,17 @@
 
 #include "cub3d.h"
 
+unsigned int get_pixel_from_tex(int x, int y, t_texture_struct tex)
+{
+    unsigned int *img;
+    
+    if(x >= tex.width || y >= tex.height || x < 0 || y < 0)
+        return (-1);
+    
+    img = (unsigned int *)tex.data;
+    return (img[y * tex.width + x]);
+}
+
 void put_pixel(int x, int y, int color, t_cub3d *cub3d)
 {
     unsigned int *img;
@@ -50,8 +61,13 @@ void draw_map(t_cub3d *game)
 {
     char **map = game->map.map;
     int color = 0x0000FF;
+    int player_col = 0xFFFF00;
     for(int y = 0; map[y]; y++)
         for(int x = 0; map[y][x]; x++)
             if(map[y][x] == '1')
                 draw_square(x * MINIMAP_SCALE + 30, y * MINIMAP_SCALE+ 30, MINIMAP_SCALE, color, game);
+
+    int player_x = (int)game->player.pos.x * MINIMAP_SCALE + 30;
+    int player_y = (int)game->player.pos.y * MINIMAP_SCALE + 30;
+    draw_square(player_x, player_y, MINIMAP_SCALE, player_col, game);
 }
