@@ -82,63 +82,28 @@ bool try_move(float new_x, float new_y, char **map)
     return true;
 }
 
-void move_player(float cos_dir, float sin_dir, float speed, t_player *player, char **map)
+void move_player(double angle, float speed, t_player *player, char **map)
 {
-    float new_x;
-    float new_y;
+    t_vec2 movement;
+    t_dvec2 new;
+    double mangle = angle + atan2(movement.x, movement.y);
     
-    // Forward movement
-    if (player->up)
-    {
-        new_x = player->pos.x + cos_dir * speed;
-        new_y = player->pos.y + sin_dir * speed;
-        if (try_move(new_x, new_y, map))
-        {
-            player->pos.x = new_x;
-            player->pos.y = new_y;
-        }
-    }
-    
-    // Backward movement
-    if (player->down)
-    {
-        new_x = player->pos.x - cos_dir * speed;
-        new_y = player->pos.y - sin_dir * speed;
-        if (try_move(new_x, new_y, map))
-        {
-            player->pos.x = new_x;
-            player->pos.y = new_y;
-        }
-    }
-    
-    // Strafe right
-    if (player->right)
-    {
-        new_x = player->pos.x - sin_dir * speed;
-        new_y = player->pos.y + cos_dir * speed;
-        if (try_move(new_x, new_y, map))
-        {
-            player->pos.x = new_x;
-            player->pos.y = new_y;
-        }
-    }
-    
-    // Strafe left
-    if (player->left)
-    {
-        new_x = player->pos.x + sin_dir * speed;
-        new_y = player->pos.y - cos_dir * speed;
-        if (try_move(new_x, new_y, map))
-        {
-            player->pos.x = new_x;
-            player->pos.y = new_y;
-        }
-    }
+    if (!(player->up - player->down) && !(player->right - player->left))
+        return ;
+
+    movement = (t_vec2) { player->right - player->left, player->up - player->down };
+
+
+    new.x = player->pos.x + cos(mangle) * speed;
+    new.y = player->pos.y + sin(mangle) * speed;
+    if (try_move(new.x, player->pos.y, map))
+        player->pos.x = new.x;
+    if (try_move(player->pos.x, new.y, map))
+        player->pos.y = new.y;
 }
 
 void update_camera_plane(t_player *player)
 {
-    // Update the camera plane to be perpendicular to the player direction
     player->plane.x = sin(player->angle) * player->fov;
     player->plane.y = -cos(player->angle) * player->fov;
 }
@@ -151,7 +116,7 @@ void player_key_handler(t_player *player, char **map)
     if (player->rotate_right)
         player->angle += CAMERA_SPEED;
     
-    // Keep angle between 0 and 2*PI
+        // Keep angle between 0 and 2*PI
     player->angle = fmod(player->angle, 2 * PI);
     if (player->angle < 0)
         player->angle += 2 * PI;
@@ -167,5 +132,5 @@ void player_key_handler(t_player *player, char **map)
     update_camera_plane(player);
     
     // Move player
-    move_player(cos(player->angle), sin(player->angle), current_speed, player, map);
+    move_player(player->angle, current_speed, player, map);
 }
