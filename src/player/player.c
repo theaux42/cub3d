@@ -15,7 +15,6 @@ void empty_player(t_player *player)
     player->rotate_left = false;
     player->rotate_right = false;
     
-    // Initialize the camera plane perpendicular to direction
     player->plane.x = 0.0;
     player->plane.y = 0.66;
 }
@@ -86,14 +85,13 @@ void move_player(double angle, float speed, t_player *player, char **map)
 {
     t_vec2 movement;
     t_dvec2 new;
-    double mangle = angle + atan2(movement.x, movement.y);
-    
-    if (!(player->up - player->down) && !(player->right - player->left))
-        return ;
+    double mangle;
+
 
     movement = (t_vec2) { player->right - player->left, player->up - player->down };
-
-
+    mangle = angle + atan2(movement.x, movement.y);
+    if (!(player->up - player->down) && !(player->right - player->left))
+        return ;
     new.x = player->pos.x + cos(mangle) * speed;
     new.y = player->pos.y + sin(mangle) * speed;
     if (try_move(new.x, player->pos.y, map))
@@ -116,21 +114,17 @@ void player_key_handler(t_player *player, char **map)
     if (player->rotate_right)
         player->angle += CAMERA_SPEED;
     
-        // Keep angle between 0 and 2*PI
     player->angle = fmod(player->angle, 2 * PI);
     if (player->angle < 0)
         player->angle += 2 * PI;
     
-    // Adjust speed based on sprint state
     float current_speed = player->speed;
     if (player->sprint)
         current_speed *= 1.5;
     else
         current_speed = PLAYER_SPEED / 2;
     
-    // Update camera plane
     update_camera_plane(player);
     
-    // Move player
     move_player(player->angle, current_speed, player, map);
 }
