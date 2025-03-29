@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:05:40 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/29 15:17:14 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/03/29 20:35:08 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	empty_player(t_player *player)
 	player->sprint = false;
 	player->rotate_left = false;
 	player->rotate_right = false;
+
 	player->plane.x = 0.0;
 	player->plane.y = 0.66;
 }

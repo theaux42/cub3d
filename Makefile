@@ -45,7 +45,7 @@ fcleanlib:
 sre: 
 	rm -f $(OBJS)
 	rm -f $(OUTPUT)
-	all
+	make all
 
 fclean: clean
 	rm -f $(OUTPUT)

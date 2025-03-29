@@ -36,7 +36,7 @@ typedef enum e_colors
 # define MINIMAP_SCALE 10
 
 # define PLAYER_SPEED 0.1
-# define CAMERA_SPEED 0.03
+# define CAMERA_SPEED 0.12
 
 # define W 119
 # define A 97

@@ -24,6 +24,10 @@ bool	init_parsing(t_cub3d *cub3d)
 {
 	if (parse_settings(cub3d))
 		return (true);
+    if (!is_finished(cub3d))
+    {
+        return (ft_dprintf(2, "Error happened\n"), true);
+    }
 	print_settings(cub3d);
 	if (parse_map(cub3d))
 		return (true);
