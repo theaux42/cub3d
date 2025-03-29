@@ -99,6 +99,7 @@ typedef struct s_hit
     t_facing	facing;
     t_vec2		pos;
     t_dvec2		dir;
+    char        type;
     
 }           t_hit;
 

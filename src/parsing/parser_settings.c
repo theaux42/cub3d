@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:36 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/21 17:57:37 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:02:35 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	parse_textures(t_cub3d *cub3d, char *line, int target)
 		if (!cub3d->map.texture[target].path)
 			return (ft_dprintf(2, ERR_MALLOC), true);
 		cub3d->map.texture[target].path[ft_strlen(line) - 1] = 0;
-		ft_printf("Texture %i : %s\n", target,cub3d->map.texture[target].path);
+		ft_printf("Texture %i : %s\n", target, cub3d->map.texture[target].path);
 	}
 	return (false);
 }

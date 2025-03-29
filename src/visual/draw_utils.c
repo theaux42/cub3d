@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:16:43 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/28 19:15:23 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:03:22 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,20 @@ void	draw_map(t_cub3d *cub3d)
 	t_vec2	playercoord;
 
 	drawcoord = (t_vec2){.x = 0, .y = 0};
-    playercoord = (t_vec2){.x = 0, .y = 0};
-    playercoord.x = (int)cub3d->player.pos.x * MINIMAP_SCALE + 30;
-    playercoord.y = (int)cub3d->player.pos.y * MINIMAP_SCALE + 30;
-    while (cub3d->map.map[drawcoord.y])
-    {
-        drawcoord.x = 0;
-        while (cub3d->map.map[drawcoord.x][drawcoord.y])
-        {
-            if (cub3d->map.map[drawcoord.x][drawcoord.y] == '1')
-                draw_square(drawcoord.x, drawcoord.y, MINIMAP_SCALE, 0x000000, cub3d);
-            drawcoord.x += MINIMAP_SCALE;
-        }
-        drawcoord.y += MINIMAP_SCALE;
-    }
-    draw_square(playercoord.x, playercoord.y, MINIMAP_SCALE, 0xFFFF00, cub3d);
+	playercoord = (t_vec2){.x = 0, .y = 0};
+	playercoord.x = (int)cub3d->player.pos.x * MINIMAP_SCALE + 30;
+	playercoord.y = (int)cub3d->player.pos.y * MINIMAP_SCALE + 30;
+	while (cub3d->map.map[drawcoord.y])
+	{
+		drawcoord.x = 0;
+		while (cub3d->map.map[drawcoord.x][drawcoord.y])
+		{
+			if (cub3d->map.map[drawcoord.x][drawcoord.y] == '1')
+				draw_square(drawcoord.x, drawcoord.y, MINIMAP_SCALE, 0x000000,
+					cub3d);
+			drawcoord.x += MINIMAP_SCALE;
+		}
+		drawcoord.y += MINIMAP_SCALE;
+	}
+	draw_square(playercoord.x, playercoord.y, MINIMAP_SCALE, 0xFFFF00, cub3d);
 }
