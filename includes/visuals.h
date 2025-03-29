@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:18:55 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/25 20:55:50 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/03/28 19:00:18 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void    draw_square(int x, int y, int size, int color, t_cub3d *cub3d);
 void    put_pixel(int x, int y, int color, t_cub3d *cub3d);
 void    draw_map(t_cub3d *cub3d);
 
-unsigned int get_pixel_from_tex(int x, int y, t_texture_struct tex);
+unsigned int get_pixel_from_tex(int x, int y, t_texture_struct tex, t_hit hit);
 
 char get_wall_orientation(t_cub3d *cub3d, float hitX, float hitY, float ray_angle);
 

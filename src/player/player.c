@@ -68,10 +68,8 @@ int on_key_release(int key, t_player *player)
 
 bool try_move(float new_x, float new_y, char **map)
 {
-    // Add a buffer zone around walls for smooth movement
     const float collision_buffer = 0.2;
     
-    // Check collision at new position plus buffer in each direction
     if (is_touching_wall(new_x + collision_buffer, new_y, map) ||
         is_touching_wall(new_x - collision_buffer, new_y, map) ||
         is_touching_wall(new_x, new_y + collision_buffer, map) ||

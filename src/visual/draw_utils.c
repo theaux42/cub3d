@@ -3,71 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:16:43 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/16 00:10:08 by theaux           ###   ########.fr       */
+/*   Updated: 2025/03/28 19:15:23 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-unsigned int get_pixel_from_tex(int x, int y, t_texture_struct tex)
+unsigned int	get_pixel_from_tex(int x, int y, t_texture_struct tex,
+		t_hit hit)
 {
-    unsigned int *img;
-    
-    if(x >= tex.width || y >= tex.height || x < 0 || y < 0)
-        return (0x000000);
-    
-    img = (unsigned int *)tex.data;
-    return (img[y * tex.width + x]);
+	unsigned int	*img;
+	unsigned int	color;
+	double			shade_factor;
+	t_rgb			rgb;
+
+	if (x >= tex.width || y >= tex.height || x < 0 || y < 0)
+		return (0x000000);
+	img = (unsigned int *)tex.data;
+	color = img[y * tex.width + x];
+	shade_factor = 1.0 - fmin(0.7, hit.dist / 14.0);
+	shade_factor = fmax(0.2, shade_factor);
+	rgb.r = ((color >> 16) & 0xFF) * shade_factor;
+	rgb.g = ((color >> 8) & 0xFF) * shade_factor;
+	rgb.b = (color & 0xFF) * shade_factor;
+	return ((rgb.r << 16) | (rgb.g << 8) | rgb.b);
 }
 
-void put_pixel(int x, int y, int color, t_cub3d *cub3d)
+void	put_pixel(int x, int y, int color, t_cub3d *cub3d)
 {
-    unsigned int *img;
-    
-    if(x >= WIDTH || y >= HEIGHT || x < 0 || y < 0)
-        return;
-    
-    img = (unsigned int *)cub3d->data;
-    img[y * WIDTH + x] = color;
+	unsigned int	*img;
+
+	if (x >= WIDTH || y >= HEIGHT || x < 0 || y < 0)
+		return ;
+	img = (unsigned int *)cub3d->data;
+	img[y * WIDTH + x] = color;
 }
 
-void draw_square(int x, int y, int size, int color, t_cub3d *cub3d)
+void	draw_square(int x, int y, int size, int color, t_cub3d *cub3d)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 0;
-    while (i < size)
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			put_pixel(x + i, y + j, color, cub3d);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	ft_mlx_clear_image(t_cub3d *cub3d)
+{
+	ft_memset(cub3d->data, 0, cub3d->size_line * HEIGHT);
+}
+
+void	draw_map(t_cub3d *cub3d)
+{
+	t_vec2	drawcoord;
+	t_vec2	playercoord;
+
+	drawcoord = (t_vec2){.x = 0, .y = 0};
+    playercoord = (t_vec2){.x = 0, .y = 0};
+    playercoord.x = (int)cub3d->player.pos.x * MINIMAP_SCALE + 30;
+    playercoord.y = (int)cub3d->player.pos.y * MINIMAP_SCALE + 30;
+    while (cub3d->map.map[drawcoord.y])
     {
-        j = 0;
-        while (j < size)
+        drawcoord.x = 0;
+        while (cub3d->map.map[drawcoord.x][drawcoord.y])
         {
-            put_pixel(x + i, y + j, color, cub3d);
-            j++;
+            if (cub3d->map.map[drawcoord.x][drawcoord.y] == '1')
+                draw_square(drawcoord.x, drawcoord.y, MINIMAP_SCALE, 0x000000, cub3d);
+            drawcoord.x += MINIMAP_SCALE;
         }
-        i++;
+        drawcoord.y += MINIMAP_SCALE;
     }
-}
-
-void ft_mlx_clear_image(t_cub3d *cub3d)
-{
-    ft_memset(cub3d->data, 0, cub3d->size_line * HEIGHT);
-}
-
-void draw_map(t_cub3d *game)
-{
-    char **map = game->map.map;
-    int color = 0x0000FF;
-    int player_col = 0xFFFF00;
-    for(int y = 0; map[y]; y++)
-        for(int x = 0; map[y][x]; x++)
-            if(map[y][x] == '1')
-                draw_square(x * MINIMAP_SCALE + 30, y * MINIMAP_SCALE+ 30, MINIMAP_SCALE, color, game);
-
-    int player_x = (int)game->player.pos.x * MINIMAP_SCALE + 30;
-    int player_y = (int)game->player.pos.y * MINIMAP_SCALE + 30;
-    draw_square(player_x, player_y, MINIMAP_SCALE, player_col, game);
+    draw_square(playercoord.x, playercoord.y, MINIMAP_SCALE, 0xFFFF00, cub3d);
 }

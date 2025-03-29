@@ -72,36 +72,41 @@ int wall_color(t_hit hit)
 	return (0);
 }
 
+void	draw_line(t_cub3d *cub3d, t_hit hit, t_texture_struct tex, t_vec2 pcoord)
+{
+	t_vec2		texcoord;
+	long long	wall_height;
+	int			start_y;
+	int			end;
+
+	wall_height = (HEIGHT / hit.dist);
+	start_y = HEIGHT / 2 - wall_height / 2;
+	end = start_y + wall_height;
+	texcoord.x = hit.x_wall * tex.width;
+	if (pcoord.y < start_y)
+		put_pixel(pcoord.x, pcoord.y, cub3d->map.colors[CEILING], cub3d);
+	else if (pcoord.y >= start_y && pcoord.y < end)
+	{
+		texcoord.y = ((double)(pcoord.y - start_y) / wall_height) * tex.height;
+		put_pixel(pcoord.x, pcoord.y, 
+			get_pixel_from_tex(texcoord.x, texcoord.y, tex, hit), cub3d);
+	}
+	else
+		put_pixel(pcoord.x, pcoord.y, cub3d->map.colors[FLOOR], cub3d);
+}
+
 void	draw_walls(t_cub3d *cub3d, int x, t_hit hit)
 {
-    long long		wall_height;
-    int				start_y;
-	int				end;
-	int				y;
-	t_vec2 texcoord;
-	t_texture_struct tex = cub3d->map.texture[hit.facing];
-	printf("tex %d %d\n", tex.width, tex.height);
-	unsigned int col;
-	
-	texcoord.x = hit.x_wall * tex.width;
-    wall_height = (HEIGHT / hit.dist);
-    start_y = HEIGHT / 2 - wall_height / 2;
-    end = start_y + wall_height;
-    y = 0;
-	while (y < HEIGHT)
-    {
-        if (y < start_y)
-            put_pixel(x, y, cub3d->map.colors[CEILING], cub3d);  // plafond (gris)
-        else if (y >= start_y && y < end)
-		{
+	t_texture_struct 	tex;
+	t_vec2				pixelcoord;
 
-			texcoord.y = ((double)(y - start_y) / wall_height) * tex.height;
-			col = get_pixel_from_tex(texcoord.x, texcoord.y, tex);
-            put_pixel(x, y, col, cub3d);  // mur (vert)
-		}
-        else
-            put_pixel(x, y, cub3d->map.colors[FLOOR], cub3d);  // sol (gris foncé)
-        y++;
+
+	pixelcoord = (t_vec2) {.x = x, .y = 0};
+	tex = cub3d->map.texture[hit.facing];
+	while (pixelcoord.y < HEIGHT)
+    {
+		draw_line(cub3d, hit, tex, pixelcoord);
+        pixelcoord.y++;
     }
 }
 
@@ -155,8 +160,6 @@ void	raycast(t_cub3d *cub3d)
 {
 	int     x;
 	t_ray   ray;
-	
-	printf("player pos: x %f y %f\n", cub3d->player.pos.x, cub3d->player.pos.y);
 
 	x = 0;
 	while (x < WIDTH)
@@ -164,7 +167,6 @@ void	raycast(t_cub3d *cub3d)
 		ray = (t_ray) {0};
 		perform_calculation(cub3d, &ray, x);
 		perform_dda(cub3d, &ray);
-		printf("x_wall: %f\n", ray.hit.x_wall);
 		draw_walls(cub3d, x, ray.hit);
 		x++;
 	}

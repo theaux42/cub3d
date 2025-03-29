@@ -15,6 +15,13 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+typedef struct s_rgb
+{
+    unsigned int r;
+    unsigned int g;
+    unsigned int b;
+}               t_rgb;
+
 typedef struct s_vec2
 {
     int x;
