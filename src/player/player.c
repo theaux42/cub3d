@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:05:40 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/29 15:08:14 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/03/29 15:17:14 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,81 +32,46 @@ void	empty_player(t_player *player)
 
 int	on_key_press(int key, t_cub3d *cub3d)
 {
-	if (key == LEFT)
+	if (key == A)
 		cub3d->player.left = true;
-	else if (key == RIGHT)
+	else if (key == D)
 		cub3d->player.right = true;
-	else if (key == UP)
+	else if (key == W)
 		cub3d->player.up = true;
-	else if (key == DOWN)
+	else if (key == S)
 		cub3d->player.down = true;
 	else if (key == SHIFT)
 		cub3d->player.sprint = true;
-	else if (key == A)
+	else if (key == LEFT)
 		cub3d->player.rotate_left = true;
-	else if (key == D)
+	else if (key == RIGHT)
 		cub3d->player.rotate_right = true;
 	else if (key == MINUS && cub3d->player.fov > 0.5)
 		cub3d->player.fov -= 0.1;
 	else if (key == PLUS && cub3d->player.fov < 2.0)
 		cub3d->player.fov += 0.1;
 	else if (key == ESCAPE)
-	{
-		free_cub3d(cub3d);
-		exit(0);
-	}
+		(free_cub3d(cub3d), exit(0));
 	return (0);
 }
 
 int	on_key_release(int key, t_player *player)
 {
-	if (key == LEFT)
+	if (key == A)
 		player->left = false;
-	else if (key == RIGHT)
+	else if (key == D)
 		player->right = false;
-	else if (key == UP)
+	else if (key == W)
 		player->up = false;
-	else if (key == DOWN)
+	else if (key == S)
 		player->down = false;
 	else if (key == SHIFT)
 		player->sprint = false;
-	else if (key == A)
+	else if (key == LEFT)
 		player->rotate_left = false;
-	else if (key == D)
+	else if (key == RIGHT)
 		player->rotate_right = false;
 	return (0);
-}
-
-bool	try_move(float new_x, float new_y, char **map)
-{
-	float	collision_buffer;
-
-	collision_buffer = 0.2;
-	if (is_touching_wall(new_x + collision_buffer, new_y, map)
-		|| is_touching_wall(new_x - collision_buffer, new_y, map)
-		|| is_touching_wall(new_x, new_y + collision_buffer, map)
-		|| is_touching_wall(new_x, new_y - collision_buffer, map))
-		return (false);
-	return (true);
-}
-
-void	move_player(double angle, float speed, t_player *player, char **map)
-{
-	t_vec2	movement;
-	t_dvec2	new;
-	double	mangle;
-
-	movement = (t_vec2){player->right - player->left, player->up
-		- player->down};
-	mangle = angle + atan2(movement.x, movement.y);
-	if (!(player->up - player->down) && !(player->right - player->left))
-		return ;
-	new.x = player->pos.x + cos(mangle) * speed;
-	new.y = player->pos.y + sin(mangle) * speed;
-	if (try_move(new.x, player->pos.y, map))
-		player->pos.x = new.x;
-	if (try_move(player->pos.x, new.y, map))
-		player->pos.y = new.y;
 }
 
 void	update_camera_plane(t_player *player)
