@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:10:14 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/29 15:10:41 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/11 20:26:22 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,23 +152,23 @@ void	perform_calculation(t_cub3d *cub3d, t_ray *ray, int x)
 	perform_initial_step(cub3d, ray);
 }
 
-void	draw_crosshair(t_cub3d *cub3d)
-{
-	int	i;
-	int	j;
+// void	draw_crosshair(t_cub3d *cub3d)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = WIDTH / 2 - 5;
-	while (i < WIDTH / 2 + 5)
-	{
-		j = HEIGHT / 2 - 5;
-		while (j < HEIGHT / 2 + 5)
-		{
-			put_pixel(i, j, 0xFFFFFF, cub3d);
-			j++;
-		}
-		i++;
-	}
-}
+// 	i = WIDTH / 2 - 5;
+// 	while (i < WIDTH / 2 + 5)
+// 	{
+// 		j = HEIGHT / 2 - 5;
+// 		while (j < HEIGHT / 2 + 5)
+// 		{
+// 			put_pixel(i, j, 0xFFFFFF, cub3d);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	get_target(t_cub3d *cub3d, t_hit hit)
 {
@@ -191,7 +191,7 @@ void	raycast(t_cub3d *cub3d)
 		perform_calculation(cub3d, &ray, x);
 		perform_dda(cub3d, &ray);
 		draw_walls(cub3d, x, ray.hit);
-		draw_crosshair(cub3d);
+		// draw_crosshair(cub3d);
 		if (x == WIDTH / 2)
 			get_target(cub3d, ray.hit);
 		x++;

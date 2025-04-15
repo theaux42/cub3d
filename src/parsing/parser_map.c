@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:47:28 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/29 15:02:23 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/12 05:52:14 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,11 @@ bool	parse_map(t_cub3d *cub3d)
 
 	map = get_first_line(cub3d);
 	if (!map)
-		return (ft_dprintf(2, ERR_MALLOC), true);
+		return (ft_dprintf(2, ERR_WEIRD_MAP), true);
 	map = get_full_map(map, cub3d);
 	if (!map)
 		return (ft_dprintf(2, ERR_MALLOC), true);
 	cub3d->map.height = get_map_height(map);
-	printf("Map height : %i", cub3d->map.height);
 	cub3d->map.map = convert_map(map, cub3d->map.height);
 	if (!cub3d->map.map)
 		return (true);

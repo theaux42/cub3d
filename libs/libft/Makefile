@@ -44,7 +44,7 @@ LIB = libft.a
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -I ./ -g3
+CFLAGS = -Wall -Werror -Wextra -I ./
 
 TOTAL_FILES := $(words $(SRCS))
 COMPILED_COUNT := 0

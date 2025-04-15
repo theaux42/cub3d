@@ -6,14 +6,13 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:53:49 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/29 15:02:39 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/12 20:03:44 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static bool	parse_textures_xpm(t_cub3d *cub3d, t_texture_struct *texture,
-				int pos);
+static bool	parse_textures_xpm(t_cub3d *cub3d, t_texture_struct *texture);
 
 bool	init_textures(t_cub3d *cub3d)
 {
@@ -24,7 +23,7 @@ bool	init_textures(t_cub3d *cub3d)
 	{
 		if (cub3d->map.texture[i].path)
 		{
-			if (parse_textures_xpm(cub3d, &cub3d->map.texture[i], i))
+			if (parse_textures_xpm(cub3d, &cub3d->map.texture[i]))
 				return (true);
 		}
 		else
@@ -51,16 +50,14 @@ bool	is_file_exist(char *path)
 	return (false);
 }
 
-static bool	parse_textures_xpm(t_cub3d *cub3d, t_texture_struct *texture,
-		int pos)
+static bool	parse_textures_xpm(t_cub3d *cub3d, t_texture_struct *texture)
 {
-	ft_printf("Parsing texture %i\n", texture->path);
 	texture->width = 0;
 	texture->height = 0;
 	if (is_file_exist(texture->path))
-		return (ft_printf("The file doesn't exist\n"), true);
-	else
-		ft_printf("The file exists\n");
+		return (ft_printf(ERR_FILE_DOESNT_EXIST, texture->path), true);
+	if (ft_strncmp(texture->path + ft_strlen(texture->path) - 4, ".xpm", 4))
+		return (ft_printf(ERR_NO_FTYPE, ".xpm"), true);
 	texture->img = mlx_xpm_file_to_image(cub3d->mlx, texture->path,
 			&texture->width, &texture->height);
 	if (!texture->img)
@@ -75,6 +72,5 @@ static bool	parse_textures_xpm(t_cub3d *cub3d, t_texture_struct *texture,
 		ft_dprintf(2, ERR_TEXTURE, texture->path);
 		return (true);
 	}
-	ft_printf("Texture %i loaded successfully!\n", pos);
 	return (false);
 }

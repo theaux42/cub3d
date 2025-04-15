@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:16:43 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/29 15:03:22 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/11 20:41:54 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@ unsigned int	get_pixel_from_tex(int x, int y, t_texture_struct tex,
 	return ((rgb.r << 16) | (rgb.g << 8) | rgb.b);
 }
 
+// unsigned int	get_pixel_from_tex(int x, int y, t_texture_struct tex,
+// 		t_hit hit)
+// {
+// 	(void)hit;
+// 	unsigned int *img;
+
+// 	if(x >= tex.width || y >= tex.height || x < 0 || y < 0)
+// 		return (0x000000);
+
+// 	img = (unsigned int *)tex.data;
+// 	return (img[y * tex.width + x]);
+// }
+
 void	put_pixel(int x, int y, int color, t_cub3d *cub3d)
 {
 	unsigned int	*img;
@@ -44,25 +57,19 @@ void	put_pixel(int x, int y, int color, t_cub3d *cub3d)
 
 void	draw_square(int x, int y, int size, int color, t_cub3d *cub3d)
 {
-	int	i;
-	int	j;
+	t_vec2	pos;
 
-	i = 0;
-	while (i < size)
+	pos = (t_vec2){0, 0};
+	while (pos.y < size)
 	{
-		j = 0;
-		while (j < size)
+		pos.x = 0;
+		while (pos.x < size)
 		{
-			put_pixel(x + i, y + j, color, cub3d);
-			j++;
+			put_pixel(x + pos.y, y + pos.x, color, cub3d);
+			pos.x++;
 		}
-		i++;
+		pos.y++;
 	}
-}
-
-void	ft_mlx_clear_image(t_cub3d *cub3d)
-{
-	ft_memset(cub3d->data, 0, cub3d->size_line * HEIGHT);
 }
 
 void	draw_map(t_cub3d *cub3d)

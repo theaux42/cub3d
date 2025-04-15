@@ -24,8 +24,18 @@ bool	init_cub3d(t_cub3d *cub3d, char *path);
 bool	init_parsing(t_cub3d *cub3d);
 bool	init_textures(t_cub3d *cub3d); 
 
-	bool parse_settings(t_cub3d *cub3d);
+bool	parse_settings(t_cub3d *cub3d);
 bool	parse_map(t_cub3d *cub3d);
+
+bool    check_player_amount(t_map map);
+
+bool    check_map_chars(t_map map);
+
+bool	is_map_closed(t_cub3d *cub3d);
+
+bool    is_map_valid(t_cub3d *cub3d);
+
+bool	settings_checker(t_cub3d *cub3d);
 
 bool	is_finished(t_cub3d *cub3d);
 

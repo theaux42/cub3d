@@ -6,27 +6,15 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 01:50:06 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/29 15:09:08 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/12 05:31:48 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	show_facing(float angle)
-{
-	if (angle > 0 && angle < PI / 2)
-		ft_printf("NO\r");
-	else if (angle > PI / 2 && angle < PI)
-		ft_printf("SO\r");
-	else if (angle > PI && angle < 3 * PI / 2)
-		ft_printf("EA\r");
-	else if (angle > 3 * PI / 2 && angle < 2 * PI)
-		ft_printf("WE\r");
-}
-
 int	render(t_cub3d *cub3d)
 {
-	ft_mlx_clear_image(cub3d);
+	// ft_mlx_clear_image(cub3d);
 	raycast(cub3d);
 	// draw_map(cub3d);
 	player_key_handler(&cub3d->player, cub3d->map.map);

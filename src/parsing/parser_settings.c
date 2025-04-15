@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:36 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/30 00:56:15 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/13 17:58:42 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,25 @@ static bool	parse_textures(t_cub3d *cub3d, char *line, int target)
 	return (false);
 }
 
+static bool	check_colors(char **colors, int *color)
+{
+	if (!colors)
+		return (ft_dprintf(2, ERR_MALLOC), true);
+	if (*color != -1)
+		return (ft_freesplit(colors), true);
+	(*color) = -1;
+	if (ft_split_len(colors) != 3)
+		return ((ft_dprintf(2, ERR_COLOR_FORMAT), ft_freesplit(colors)), true);
+	if (ft_strlen(colors[0]) <= 0 || ft_strlen(colors[1]) <= 0
+		|| ft_strlen(colors[2]) <= 0)
+		return ((ft_dprintf(2, ERR_COLOR_FORMAT), ft_freesplit(colors)), true);
+	(*color) = get_trgb(0, ft_atoi(colors[0]), ft_atoi(colors[1]),
+			ft_atoi(colors[2]));
+	if ((*color) != -1)
+		return (ft_freesplit(colors), false);
+	return (ft_freesplit(colors), true);
+}
+
 static bool	parse_colors(t_cub3d *cub3d, char *line, int target)
 {
 	char	**split;
@@ -54,16 +73,11 @@ static bool	parse_colors(t_cub3d *cub3d, char *line, int target)
 		line++;
 		while (*line == '\t' || *line == ' ')
 			line++;
+		line[ft_strlen(line) - 1] = '\0';
 		split = ft_split(line, ',');
-		if (!split)
-			return (ft_dprintf(2, ERR_MALLOC), true);
-		if (ft_split_len(split) != 3)
-			return (ft_dprintf(2, ERR_COLOR_FORMAT), true);
-		if (cub3d->map.colors[target] != -1)
-			return ((ft_freesplit(split), ft_dprintf(2, ERR_EXIST)), true);
-		cub3d->map.colors[target] = get_trgb(0, ft_atoi(split[0]),
-				ft_atoi(split[1]), ft_atoi(split[2]));
-		ft_freesplit(split);
+		if (check_colors(split, &cub3d->map.colors[target]))
+			return (true);
+		return (false);
 	}
 	return (false);
 }
@@ -77,7 +91,6 @@ bool	parse_settings(t_cub3d *cub3d)
 		return ((ft_dprintf(2, ERR_MALLOC), close(cub3d->fd)), true);
 	while (line && !is_finished(cub3d))
 	{
-		ft_printf("current line : %s\n", line);
 		if (parse_textures(cub3d, line, -1))
 			return (free(line), true);
 		if (parse_colors(cub3d, line, -1))

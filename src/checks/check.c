@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colors.c                                           :+:      :+:    :+:   */
+/*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 17:52:34 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/12 20:09:46 by tbabou           ###   ########.fr       */
+/*   Created: 2025/04/11 18:00:52 by tbabou            #+#    #+#             */
+/*   Updated: 2025/04/12 18:45:38 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_trgb(int t, int r, int g, int b)
+bool	is_map_valid(t_cub3d *cub3d)
 {
-	ft_printf("color : \n");
-	ft_printf("R -> %i\n", r);
-	ft_printf("G -> %i\n", g);
-	ft_printf("B -> %i\n", b);
-	if (t < 0 || r < 0 || g < 0 || b < 0)
-		return (-1);
-	return (t << 24 | r << 16 | g << 8 | b);
+	if (is_map_closed(cub3d))
+		return (true);
+	if (check_map_chars(cub3d->map))
+		return (true);
+	if (check_player_amount(cub3d->map))
+		return (true);
+	return (false);
 }
