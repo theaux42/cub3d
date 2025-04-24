@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 00:30:54 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/29 15:03:28 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 17:12:23 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,13 @@ void	free_map_struct(t_map_line *map)
 	}
 }
 
-void	free_cub3d(t_cub3d *cub3d)
+void	destroy_mlx(t_cub3d *cub3d)
 {
-	int	i;
-
-	i = 0;
-	if (!cub3d)
-		return ;
-	while (i < 4)
+	if (cub3d->img)
 	{
-		if (cub3d->map.texture[i].path)
-			free(cub3d->map.texture[i].path);
-		i++;
+		mlx_destroy_image(cub3d->mlx, cub3d->img);
+		cub3d->img = NULL;
 	}
-	ft_freesplit(cub3d->map.map);
 	if (cub3d->win)
 	{
 		mlx_destroy_window(cub3d->mlx, cub3d->win);
@@ -52,5 +45,25 @@ void	free_cub3d(t_cub3d *cub3d)
 		free(cub3d->mlx);
 		cub3d->mlx = NULL;
 	}
+}
+
+void	free_cub3d(t_cub3d *cub3d)
+{
+	int	i;
+
+	i = 0;
+	if (!cub3d)
+		return ;
+	while (i < 4)
+	{
+		if (cub3d->map.texture[i].img)
+			mlx_destroy_image(cub3d->mlx, cub3d->map.texture[i].img);
+		if (cub3d->map.texture[i].path)
+			free(cub3d->map.texture[i].path);
+		i++;
+	}
+	ft_freesplit(cub3d->map.map);
+	destroy_mlx(cub3d);
+	free(cub3d->ray);
 	free(cub3d);
 }

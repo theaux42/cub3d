@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:05:40 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/29 20:35:08 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 19:53:25 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	empty_player(t_player *player)
 {
-	player->pos.x = 0.0;
-	player->pos.y = 0.0;
+	player->pos = (t_dvec2){0.0, 0.0};
+	player->spawn_pos = (t_vec2){0, 0};
+	player->plane = (t_dvec2){0.0, 0.66};
 	player->angle = PI / 2;
 	player->fov = 1.0;
 	player->speed = PLAYER_SPEED;
@@ -26,9 +27,6 @@ void	empty_player(t_player *player)
 	player->sprint = false;
 	player->rotate_left = false;
 	player->rotate_right = false;
-
-	player->plane.x = 0.0;
-	player->plane.y = 0.66;
 }
 
 int	on_key_press(int key, t_cub3d *cub3d)

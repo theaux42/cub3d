@@ -20,13 +20,11 @@ bool	init_parsing(t_cub3d *cub3d)
 		return (true);
 	if (parse_map(cub3d))
 		return (true);
-	if (is_map_valid(cub3d))
-		return (true);
-	// if (closed_map_checker(cub3d))
-	// 	return (true);
 	if (init_player(cub3d->map.map, &cub3d->player))
 		return (true);
 	if (init_textures(cub3d))
+		return (true);
+	if (is_map_valid(cub3d))
 		return (true);
 	return (false);
 }

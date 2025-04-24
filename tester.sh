@@ -4,7 +4,7 @@ BIN=./cub3d
 MAP_DIR=./maps/bad
 
 for map in "$MAP_DIR"/*.cub; do
-	$BIN "$map" > /dev/null 2>&1
+	valgrind --show-leak-kinds=all --leak-check=full --track-origins=yes -q $BIN "$map"
 	RET=$? 
 	if [ $RET -ne 0 ]; then
 		echo "OK: Success on map: $map"

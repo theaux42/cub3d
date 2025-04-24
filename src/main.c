@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 01:50:06 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/12 05:31:48 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 20:23:29 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+// todo add la map
 int	render(t_cub3d *cub3d)
 {
-	// ft_mlx_clear_image(cub3d);
 	raycast(cub3d);
-	// draw_map(cub3d);
 	player_key_handler(&cub3d->player, cub3d->map.map);
-	draw_square(cub3d->player.pos.x, cub3d->player.pos.y, 3, 0xFFFF00, cub3d);
 	mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img, 0, 0);
 	return (0);
 }
@@ -39,7 +37,7 @@ int	main(int ac, char **av)
 	if (!cub3d)
 		return (1);
 	if (init_cub3d(cub3d, av[1]))
-		return (1);
+		return (free_cub3d(cub3d), 1);
 	mlx_hook(cub3d->win, 17, 1L << 17, exit_game, cub3d);
 	mlx_hook(cub3d->win, 2, 1L << 0, on_key_press, cub3d);
 	mlx_hook(cub3d->win, 3, 1L << 1, on_key_release, &cub3d->player);

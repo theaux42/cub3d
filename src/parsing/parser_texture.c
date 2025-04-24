@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_texture.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:53:49 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/12 20:03:44 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 17:18:22 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ bool	is_file_exist(char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-	{
-		ft_dprintf(2, ERR_TEXTURE, path);
 		return (true);
-	}
 	close(fd);
 	return (false);
 }

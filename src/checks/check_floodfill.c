@@ -3,116 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   check_floodfill.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:57:38 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/12 18:03:10 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 17:19:51 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static bool	skip_whitespace(char *str, int *pos)
+static bool	floodfill(t_cub3d *cub3d, bool **filled_map, int i, int j)
 {
-	char	current;
+	bool	is_closed;
 
-	current = '\0';
-	while (ft_isspace(str[*pos]))
-	{
-		current = str[*pos];
-		(*pos)++;
-		ft_printf(" ");
-		if (current == '0' && ft_isspace(str[*pos]))
-			return (true);
-	}
-	return (false);
-}
-
-static bool	is_valid_access(t_map map, t_vec2 pos)
-{
-	if (pos.y < 0 || pos.y >= map.height)
+	if (i < 0 || i >= cub3d->map.height || j < 0
+		|| j >= (int)ft_strlen(cub3d->map.map[i]))
 		return (false);
-	if (pos.x < 0 || pos.x >= (int)ft_strlen(map.map[pos.y]))
-		return (false);
-	if (map.map[pos.y][pos.x] == '\0')
-		return (false);
-	return (true);
-}
-
-static bool	perform_flood_fill(t_map map, bool **checked, t_vec2 pos)
-{
-	if (!is_valid_access(map, pos))
-		return (false);
-	if (map.map[pos.y][pos.x] == ' ')
-		return (false);
-	if (map.map[pos.y][pos.x] == '1' || checked[pos.y][pos.x])
+	if (cub3d->map.map[i][j] == '1' || filled_map[i][j] == true)
 		return (true);
-	checked[pos.y][pos.x] = true;
-	return (perform_flood_fill(map, checked, (t_vec2){pos.x + 1, pos.y})
-		&& perform_flood_fill(map, checked, (t_vec2){pos.x - 1, pos.y})
-		&& perform_flood_fill(map, checked, (t_vec2){pos.x, pos.y + 1})
-		&& perform_flood_fill(map, checked, (t_vec2){pos.x, pos.y - 1}));
+	else
+		filled_map[i][j] = true;
+	is_closed = true;
+	is_closed &= floodfill(cub3d, filled_map, i - 1, j);
+	is_closed &= floodfill(cub3d, filled_map, i + 1, j);
+	is_closed &= floodfill(cub3d, filled_map, i, j - 1);
+	is_closed &= floodfill(cub3d, filled_map, i, j + 1);
+	return (is_closed);
 }
 
-static bool	init_checked(bool ***checked, t_map map)
+static void	free_ptrarr(void **ptrarr)
 {
 	int	i;
 
 	i = 0;
-	*checked = ft_calloc(map.height, sizeof(bool *));
-	if (!*checked)
-		return (true);
-	while (i < map.height)
+	while (ptrarr[i])
 	{
-		(*checked)[i] = ft_calloc(ft_strlen(map.map[i]), sizeof(bool));
-		if (!(*checked)[i])
-		{
-			while (i <= 0)
-				free((*checked)[i--]);
-			return (free(*checked), true);
-		}
+		free(ptrarr[i]);
 		i++;
 	}
-	return (false);
-}
-
-static void	free_checked(bool **checked, int height)
-{
-	int	i;
-
-	i = 0;
-	while (i < height)
-	{
-		free(checked[i]);
-		i++;
-	}
-	free(checked);
-	ft_printf("\n-------------\n");
+	free(ptrarr);
 }
 
 bool	is_map_closed(t_cub3d *cub3d)
 {
-	bool	**checked;
-	t_vec2	pos;
+	int		x;
+	int		y;
+	int		i;
+	bool	**filled_map;
+	bool	is_closed;
 
-	pos = (t_vec2){0, 0};
-	if (init_checked(&checked, cub3d->map))
-		return (ft_printf(ERR_MALLOC), true);
-	while (cub3d->map.map[pos.y] && pos.y < cub3d->map.height)
+	x = cub3d->player.spawn_pos.x;
+	y = cub3d->player.spawn_pos.y;
+	filled_map = ft_calloc(cub3d->map.height + 1, sizeof(bool *));
+	i = 0;
+	while (i < cub3d->map.height)
 	{
-		pos.x = 0;
-		skip_whitespace(cub3d->map.map[pos.y], &pos.x);
-		while (cub3d->map.map[pos.y][pos.x])
+		filled_map[i] = ft_calloc(ft_strlen(cub3d->map.map[i]), sizeof(bool));
+		if (!filled_map[i])
 		{
-			ft_printf("%c",cub3d->map.map[pos.y][pos.x]);
-			if (ft_strchr(VALID_CHARS, cub3d->map.map[pos.y][pos.x])
-				&& !checked[pos.y][pos.x])
-				if (!perform_flood_fill(cub3d->map, checked, pos))
-					return ((free_checked(checked, cub3d->map.height),
-							ft_printf(DBG_MAP_BORDER, pos.x, pos.y)), true);
-			pos.x++;
+			free_ptrarr((void **)filled_map);
+			return (ft_dprintf(2, ERR_MALLOC), true);
 		}
-		pos.y++;
+		i++;
 	}
-	return (free_checked(checked, cub3d->map.height), false);
+	is_closed = floodfill(cub3d, filled_map, y, x);
+	free_ptrarr((void **)filled_map);
+	if (!is_closed)
+		return (ft_dprintf(2, ERR_MAP_BORDER), true);
+	return (false);
 }

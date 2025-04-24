@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:47:28 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/12 05:52:14 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 14:55:35 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**convert_map(t_map_line *map, int map_height)
 	{
 		if (current->line)
 		{
-			final_map[current_line] = ft_strdup(current->line);
+			final_map[current_line] = ft_strtrim(current->line, " \t");
 			if (!final_map[current_line])
 				return ((ft_freesplit(final_map), ft_dprintf(2, ERR_MALLOC)),
 					NULL);

@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   check_other.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:18:25 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/12 18:43:08 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 19:56:31 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +29,18 @@ bool	settings_checker(t_cub3d *cub3d)
 bool	check_map_chars(t_map map)
 {
 	t_vec2	pos;
+	bool	end_of_map;
 
+	end_of_map = false;
 	pos = (t_vec2){0, 0};
 	while (pos.y < map.height - 1)
 	{
 		pos.x = 0;
 		while ((map.map[pos.y][pos.x]) && ft_isspace(map.map[pos.y][pos.x]))
 			pos.x++;
-		if (ft_strcmp((map.map[pos.y]) + pos.x, "\n") == 0)
+		if (map.map[pos.y][pos.x] == '\0' && !end_of_map)
+			end_of_map = true;
+		if (map.map[pos.y][pos.x] != '\0' && end_of_map)
 			return (ft_printf(ERR_WEIRD_MAP), true);
 		pos.y++;
 	}

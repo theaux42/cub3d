@@ -12,8 +12,8 @@ UTILS_FILES = colors.c free.c
 PARSING_FILES = parser.c parser_settings.c parser_texture.c parser_utils.c \
 		parser_map.c parser_player.c parser_checker.c init.c
 CHECKER_FILES = check.c check_floodfill.c check_other.c
-PLAYER_FILES = player.c player_raycast.c player_movement.c
-VISUAL_FILES = draw_utils.c
+PLAYER_FILES = player.c player_movement.c
+VISUAL_FILES = dda.c render.c draw_utils.c
 
 PARSING = $(addprefix src/parsing/, $(PARSING_FILES))
 CHECKER = $(addprefix src/checks/, $(CHECKER_FILES))

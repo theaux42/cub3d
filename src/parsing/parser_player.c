@@ -3,52 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   parser_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:04:55 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/29 15:02:30 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 19:56:50 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-float	set_player_dir(char c)
+static bool	is_valid_player(char c)
+{
+	if (c == 'N' || c == 'E' || c == 'W' || c == 'S')
+		return (true);
+	return (false);
+}
+
+static void	set_player_dir(t_player *player, char c)
 {
 	if (c == 'N')
-		return (3 * PI / 2);
+		player->angle = 3 * PI / 2;
 	else if (c == 'E')
-		return (0);
+		player->angle = 0;
 	else if (c == 'S')
-		return (PI / 2);
+		player->angle = PI / 2;
 	else if (c == 'W')
-		return (PI);
-	return (0);
+		player->angle = PI;
+}
+
+static void	set_player_pos(t_player *player, int x, int y)
+{
+	player->pos = (t_dvec2){(float)x + 0.5f, (float)y + 0.5f};
+	player->spawn_pos = (t_vec2){x, y};
 }
 
 bool	init_player(char **map, t_player *player)
 {
-	int	i;
-	int	j;
+	t_vec2	player_pos;
 
-	i = 0;
-	j = 0;
+	player_pos = (t_vec2){0, 0};
 	empty_player(player);
-	while (map[i])
+	while (map[player_pos.y])
 	{
-		while (map[i][j])
+		while (map[player_pos.y][player_pos.x])
 		{
-			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W'
-				|| map[i][j] == 'S')
+			if (is_valid_player(map[player_pos.y][player_pos.x]))
 			{
-				player->angle = set_player_dir(map[i][j]);
-				player->pos.x = (float)j + 0.5f;
-				player->pos.y = (float)i + 0.5f;
+				set_player_dir(player, map[player_pos.y][player_pos.x]);
+				set_player_pos(player, player_pos.x, player_pos.y);
 				return (false);
 			}
-			j++;
+			player_pos.x++;
 		}
-		i++;
-		j = 0;
+		player_pos.y++;
+		player_pos.x = 0;
 	}
 	return (ft_dprintf(2, ERR_NO_PLAYER), true);
 }

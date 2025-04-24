@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:16:43 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/11 20:41:54 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 20:24:00 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	put_pixel(int x, int y, int color, t_cub3d *cub3d)
 	img[y * WIDTH + x] = color;
 }
 
-void	draw_square(int x, int y, int size, int color, t_cub3d *cub3d)
+void	draw_square(t_vec2 coords, int size, int color, t_cub3d *cub3d)
 {
 	t_vec2	pos;
 
@@ -65,7 +65,7 @@ void	draw_square(int x, int y, int size, int color, t_cub3d *cub3d)
 		pos.x = 0;
 		while (pos.x < size)
 		{
-			put_pixel(x + pos.y, y + pos.x, color, cub3d);
+			put_pixel(coords.x + pos.y, coords.y + pos.x, color, cub3d);
 			pos.x++;
 		}
 		pos.y++;
@@ -74,24 +74,24 @@ void	draw_square(int x, int y, int size, int color, t_cub3d *cub3d)
 
 void	draw_map(t_cub3d *cub3d)
 {
-	t_vec2	drawcoord;
-	t_vec2	playercoord;
+	t_vec2	dCoords;
+	t_vec2	pCoords;
 
-	drawcoord = (t_vec2){.x = 0, .y = 0};
-	playercoord = (t_vec2){.x = 0, .y = 0};
-	playercoord.x = (int)cub3d->player.pos.x * MINIMAP_SCALE + 30;
-	playercoord.y = (int)cub3d->player.pos.y * MINIMAP_SCALE + 30;
-	while (cub3d->map.map[drawcoord.y])
+	dCoords = (t_vec2){.x = 0, .y = 0};
+	pCoords = (t_vec2){.x = 0, .y = 0};
+	pCoords.x = (int)cub3d->player.pos.x * MINIMAP_SCALE + 30;
+	pCoords.y = (int)cub3d->player.pos.y * MINIMAP_SCALE + 30;
+	while (cub3d->map.map[dCoords.y])
 	{
-		drawcoord.x = 0;
-		while (cub3d->map.map[drawcoord.x][drawcoord.y])
+		dCoords.x = 0;
+		while (cub3d->map.map[dCoords.x][dCoords.y])
 		{
-			if (cub3d->map.map[drawcoord.x][drawcoord.y] == '1')
-				draw_square(drawcoord.x, drawcoord.y, MINIMAP_SCALE, 0x000000,
+			if (cub3d->map.map[dCoords.x][dCoords.y] == '1')
+				draw_square(dCoords, MINIMAP_SCALE, 0x000000,
 					cub3d);
-			drawcoord.x += MINIMAP_SCALE;
+			dCoords.x += MINIMAP_SCALE;
 		}
-		drawcoord.y += MINIMAP_SCALE;
+		dCoords.y += MINIMAP_SCALE;
 	}
-	draw_square(playercoord.x, playercoord.y, MINIMAP_SCALE, 0xFFFF00, cub3d);
+	draw_square(pCoords, MINIMAP_SCALE, 0xFFFF00, cub3d);
 }

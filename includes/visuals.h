@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visuals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:18:55 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/28 19:00:18 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 20:22:46 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ int     get_trgb(int t, int r, int g, int b);
 void    free_map_struct(t_map_line *map);
 void    free_cub3d(t_cub3d *cub3d);
 
-void    ft_mlx_clear_image(t_cub3d *cub3d);
-void    draw_square(int x, int y, int size, int color, t_cub3d *cub3d);
+void	draw_square(t_vec2 coords, int size, int color, t_cub3d *cub3d);
 void    put_pixel(int x, int y, int color, t_cub3d *cub3d);
 void    draw_map(t_cub3d *cub3d);
+
+void	perform_dda(t_cub3d *cub3d, t_ray *ray);
 
 unsigned int get_pixel_from_tex(int x, int y, t_texture_struct tex, t_hit hit);
 

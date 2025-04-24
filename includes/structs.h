@@ -37,6 +37,7 @@ typedef struct s_dvec2
 typedef struct  s_player
 {
     t_dvec2     pos;
+	t_vec2	  	spawn_pos;
     float       angle;
     float       fov;
     float       speed;

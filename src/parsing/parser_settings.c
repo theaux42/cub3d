@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_settings.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:36 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/13 17:58:42 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/24 20:34:29 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ static bool	parse_textures(t_cub3d *cub3d, char *line, int target)
 			line++;
 		if (cub3d->map.texture[target].path != NULL)
 			return (ft_dprintf(2, ERR_EXIST), true);
-		cub3d->map.texture[target].path = ft_strdup(line);
+		cub3d->map.texture[target].path = ft_strtrim(line, " \t\n\r");
 		if (!cub3d->map.texture[target].path)
-			return (ft_dprintf(2, ERR_MALLOC), true);
-		cub3d->map.texture[target].path[ft_strlen(line) - 1] = 0;
+			return (ft_dprintf(2, DBG_MALLOC), true);
 	}
 	return (false);
 }
@@ -88,7 +87,7 @@ bool	parse_settings(t_cub3d *cub3d)
 
 	line = get_next_line(cub3d->fd);
 	if (!line)
-		return ((ft_dprintf(2, ERR_MALLOC), close(cub3d->fd)), true);
+		return ((ft_dprintf(2, ERR_NO_LINE), close(cub3d->fd)), true);
 	while (line && !is_finished(cub3d))
 	{
 		if (parse_textures(cub3d, line, -1))
