@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:13:21 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/10 22:12:51 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/25 15:07:15 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ bool	try_move(float new_x, float new_y, char **map)
 	float	collision_buffer;
 
 	collision_buffer = 0.2;
-	if (is_touching_wall(new_x + collision_buffer, new_y, map)
-		|| is_touching_wall(new_x - collision_buffer, new_y, map)
-		|| is_touching_wall(new_x, new_y + collision_buffer, map)
-		|| is_touching_wall(new_x, new_y - collision_buffer, map))
+	if (is_touching_wall(new_x + collision_buffer, new_y, map, false)
+		|| is_touching_wall(new_x - collision_buffer, new_y, map, false)
+		|| is_touching_wall(new_x, new_y + collision_buffer, map, false)
+		|| is_touching_wall(new_x, new_y - collision_buffer, map, false))
 		return (false);
 	return (true);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:57:53 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/24 19:58:47 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/25 15:05:51 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	is_touching_wall(float origin_x, float origin_y, char **map)
+bool	is_touching_wall(float origin_x, float origin_y, char **map, bool is_crosshair)
 {
 	int	x;
 	int	y;
@@ -21,12 +21,14 @@ bool	is_touching_wall(float origin_x, float origin_y, char **map)
 	y = (int)origin_y;
 	if (x < 0 || y < 0)
 		return (true);
-	if (map[y][x] == '1')
+	if (is_crosshair && map[y][x] == 'd')
+		return (true);
+	if (map[y][x] == '1' || map[y][x] == 'D')
 		return (true);
 	return (false);
 }
 
-static void	run_dda_loop(t_cub3d *cub3d, t_ray *ray)
+static void	run_dda_loop(t_cub3d *cub3d, t_ray *ray, bool is_crosshair)
 {
 	while (!ray->is_hit)
 	{
@@ -42,7 +44,8 @@ static void	run_dda_loop(t_cub3d *cub3d, t_ray *ray)
 			ray->map_pos.y += ray->step.y;
 			ray->flag = 1;
 		}
-		if (is_touching_wall(ray->map_pos.x, ray->map_pos.y, cub3d->map.map))
+		if (is_touching_wall(ray->map_pos.x, ray->map_pos.y, cub3d->map.map,
+				is_crosshair))
 			ray->is_hit = true;
 	}
 }
@@ -73,8 +76,8 @@ static void	calculate_hit_details(t_cub3d *cub3d, t_ray *ray)
 	ray->hit.type = cub3d->map.map[(int)ray->hit.pos.y][(int)ray->hit.pos.x];
 }
 
-void	perform_dda(t_cub3d *cub3d, t_ray *ray)
+void	perform_dda(t_cub3d *cub3d, t_ray *ray, bool is_crosshair)
 {
-	run_dda_loop(cub3d, ray);
+	run_dda_loop(cub3d, ray, is_crosshair);
 	calculate_hit_details(cub3d, ray);
 }

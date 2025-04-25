@@ -49,6 +49,8 @@ typedef struct  s_player
     bool        right;
     bool        down;
 
+	bool		interact;
+
     bool        sprint;
 
     bool        rotate_left;

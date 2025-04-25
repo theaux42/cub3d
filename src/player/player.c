@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:05:40 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/24 19:53:25 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/25 15:12:41 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	empty_player(t_player *player)
 	player->fov = 1.0;
 	player->speed = PLAYER_SPEED;
 	player->left = false;
+	player->interact = false;
 	player->right = false;
 	player->up = false;
 	player->down = false;
@@ -51,6 +52,8 @@ int	on_key_press(int key, t_cub3d *cub3d)
 		cub3d->player.fov += 0.1;
 	else if (key == ESCAPE)
 		(free_cub3d(cub3d), exit(0));
+	else if (key == SPACE)
+		cub3d->player.interact = true;
 	return (0);
 }
 

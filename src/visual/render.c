@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/24 20:47:49 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/25 15:12:54 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,10 @@ void	raycast(t_cub3d *cub3d)
 	{
 		ray = (t_ray){0};
 		perform_calculation(cub3d, &ray, x);
-		perform_dda(cub3d, &ray);
+		perform_dda(cub3d, &ray, false);
 		draw_walls(cub3d, x, ray.hit);
+		if (x == WIDTH / 2)
+			player_crosshair(cub3d);
 		x++;
 	}
 }

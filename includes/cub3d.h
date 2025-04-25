@@ -31,6 +31,7 @@
 #include "parser.h"
 #include "define.h"
 #include "structs.h"
+#include "bonus.h"
 #include "visuals.h"
 
 

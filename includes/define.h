@@ -41,7 +41,9 @@ typedef enum e_colors
 # define PLAYER_SPEED 0.1
 # define CAMERA_SPEED 0.12
 
-# define VALID_CHARS " 10NSWE"
+# define VALID_CHARS " 10NSWEDd"
+
+# define CROSSHAIR_SIZE 6
 
 # define W 119
 # define A 97
@@ -52,6 +54,9 @@ typedef enum e_colors
 # define RIGHT 65363
 # define UP 65362
 # define DOWN 65364
+
+# define SPACE 32
+
 # define ESCAPE 65307
 # define MINUS 45
 # define PLUS 61
