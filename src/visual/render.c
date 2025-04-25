@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/25 19:55:58 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/26 00:54:28 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	draw_walls(t_cub3d *cub3d, int x, t_hit hit)
 
 	pixelcoord = (t_vec2){.x = x, .y = 0};
 	tex = cub3d->map.texture[hit.facing];
+	if (hit.is_door)
+		tex = cub3d->map.texture[DOOR_TEXTURE];
 	while (pixelcoord.y < HEIGHT)
 	{
 		draw_line(cub3d, hit, tex, pixelcoord);

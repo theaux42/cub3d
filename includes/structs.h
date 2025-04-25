@@ -105,6 +105,9 @@ typedef struct s_hit
 {
     double		dist;
     double		x_wall;
+
+	bool		is_door;
+
     t_facing	facing;
     t_vec2		pos;
     t_dvec2		dir;
