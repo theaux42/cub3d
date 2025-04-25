@@ -37,24 +37,22 @@ typedef struct s_dvec2
 typedef struct  s_player
 {
     t_dvec2     pos;
-	t_vec2	  	spawn_pos;
+	t_vec2    	spawn_pos;
     float       angle;
-    float       fov;
     float       speed;
-
     t_dvec2     plane;
-
     bool        up;
     bool        left;
     bool        right;
     bool        down;
-
 	bool		interact;
-
     bool        sprint;
-
     bool        rotate_left;
     bool        rotate_right;
+    // --- Added for pitch (look up/down) ---
+    float       pitch;
+    bool        look_up;
+    bool        look_down;
 }               t_player;
 
 typedef struct s_texture_struct

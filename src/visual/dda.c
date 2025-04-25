@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:57:53 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/25 15:28:44 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/25 18:44:16 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	is_touching_wall(float origin_x, float origin_y, char **map, bool is_crosshair)
+bool	is_touching_wall(float origin_x, float origin_y, char **map,
+		bool is_crosshair)
 {
 	int	x;
 	int	y;

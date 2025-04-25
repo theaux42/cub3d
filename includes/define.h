@@ -40,7 +40,7 @@ typedef enum e_colors
 # define MINIMAP_SCALE 10
 
 # define PLAYER_SPEED 0.1
-# define CAMERA_SPEED 0.12
+# define CAMERA_SPEED 0.04
 
 # define VALID_CHARS " 10NSWEDd"
 
@@ -50,6 +50,8 @@ typedef enum e_colors
 # define A 97
 # define S 115
 # define D 100
+
+# define E 101
 
 # define LEFT 65361
 # define RIGHT 65363

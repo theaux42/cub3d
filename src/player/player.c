@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 15:05:40 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/25 15:12:41 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/25 19:29:56 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	empty_player(t_player *player)
 	player->spawn_pos = (t_vec2){0, 0};
 	player->plane = (t_dvec2){0.0, 0.66};
 	player->angle = PI / 2;
-	player->fov = 1.0;
 	player->speed = PLAYER_SPEED;
 	player->left = false;
 	player->interact = false;
@@ -28,58 +27,15 @@ void	empty_player(t_player *player)
 	player->sprint = false;
 	player->rotate_left = false;
 	player->rotate_right = false;
-}
-
-int	on_key_press(int key, t_cub3d *cub3d)
-{
-	if (key == A)
-		cub3d->player.left = true;
-	else if (key == D)
-		cub3d->player.right = true;
-	else if (key == W)
-		cub3d->player.up = true;
-	else if (key == S)
-		cub3d->player.down = true;
-	else if (key == SHIFT)
-		cub3d->player.sprint = true;
-	else if (key == LEFT)
-		cub3d->player.rotate_left = true;
-	else if (key == RIGHT)
-		cub3d->player.rotate_right = true;
-	else if (key == MINUS && cub3d->player.fov > 0.5)
-		cub3d->player.fov -= 0.1;
-	else if (key == PLUS && cub3d->player.fov < 2.0)
-		cub3d->player.fov += 0.1;
-	else if (key == ESCAPE)
-		(free_cub3d(cub3d), exit(0));
-	else if (key == SPACE)
-		cub3d->player.interact = true;
-	return (0);
-}
-
-int	on_key_release(int key, t_player *player)
-{
-	if (key == A)
-		player->left = false;
-	else if (key == D)
-		player->right = false;
-	else if (key == W)
-		player->up = false;
-	else if (key == S)
-		player->down = false;
-	else if (key == SHIFT)
-		player->sprint = false;
-	else if (key == LEFT)
-		player->rotate_left = false;
-	else if (key == RIGHT)
-		player->rotate_right = false;
-	return (0);
+	player->pitch = 0;
+	player->look_up = false;
+	player->look_down = false;
 }
 
 void	update_camera_plane(t_player *player)
 {
-	player->plane.x = sin(player->angle) * player->fov;
-	player->plane.y = -cos(player->angle) * player->fov;
+	player->plane.x = sin(player->angle);
+	player->plane.y = -cos(player->angle);
 }
 
 void	player_key_handler(t_player *player, char **map)
@@ -99,5 +55,13 @@ void	player_key_handler(t_player *player, char **map)
 	else
 		current_speed = PLAYER_SPEED / 2;
 	update_camera_plane(player);
+	if (player->look_up)
+		player->pitch += 20;
+	if (player->look_down)
+		player->pitch -= 20;
+	if (player->pitch < -HEIGHT / 2)
+		player->pitch = -HEIGHT / 2;
+	if (player->pitch > HEIGHT / 2)
+		player->pitch = HEIGHT / 2;
 	move_player(player->angle, current_speed, player, map);
 }
