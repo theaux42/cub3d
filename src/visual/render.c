@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/25 19:39:03 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/25 19:55:58 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void	draw_line(t_cub3d *cub3d, t_hit hit, t_texture_struct tex,
 	if (hit.facing == SOUTH || hit.facing == WEST)
 		texcoord.x = (tex.width - 1) - texcoord.x;
 	if (pcoord.y < start_y)
-		put_pixel(pcoord.x, pcoord.y, cub3d->map.colors[CEILING], cub3d);
+		put_pixel(pcoord, cub3d->map.colors[CEILING], cub3d);
 	else if (pcoord.y >= start_y && pcoord.y < end)
 	{
 		texcoord.y = ((double)(pcoord.y - start_y) / wall_height) * tex.height;
-		put_pixel(pcoord.x, pcoord.y, get_pixel_from_tex(texcoord.x, texcoord.y,
-				tex, hit), cub3d);
+		put_pixel(pcoord, get_pixel_from_tex(texcoord, tex, hit),
+			cub3d);
 	}
 	else
-		put_pixel(pcoord.x, pcoord.y, cub3d->map.colors[FLOOR], cub3d);
+		put_pixel(pcoord, cub3d->map.colors[FLOOR], cub3d);
 }
 
 void	draw_walls(t_cub3d *cub3d, int x, t_hit hit)

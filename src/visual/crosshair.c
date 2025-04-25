@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   crosshair.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:25:01 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/25 14:46:54 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/25 19:57:50 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	draw_crosshair(t_cub3d *cub3d, t_ray *ray)
 	color = get_crosshair_color(ray->hit);
 	while (diff-- > 3)
 	{
-		put_pixel(coords.x - diff, coords.y, color, cub3d);
-		put_pixel(coords.x + -diff, coords.y, color, cub3d);
-		put_pixel(coords.x, coords.y - diff, color, cub3d);
+		put_pixel((t_vec2){coords.x + diff, coords.y}, color, cub3d);
+		put_pixel((t_vec2){coords.x, coords.y - diff}, color, cub3d);
 	}
 	while (diff++ < CROSSHAIR_SIZE - 1)
 	{
-		put_pixel(coords.x, coords.y + diff, color, cub3d);
+		put_pixel((t_vec2){coords.x + diff, coords.y}, color, cub3d);
+		put_pixel((t_vec2){coords.x, coords.y + diff}, color, cub3d);
 	}
 }
