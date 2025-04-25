@@ -34,6 +34,13 @@ typedef struct s_dvec2
     double y;
 }               t_dvec2;
 
+typedef struct s_dvec3
+{
+	double x;
+	double y;
+	double z;
+}               t_dvec3;
+
 typedef struct  s_player
 {
     t_dvec2     pos;
