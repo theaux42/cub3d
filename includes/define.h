@@ -41,7 +41,7 @@ typedef enum e_colors
 # define PLAYER_SPEED 0.1
 # define CAMERA_SPEED 0.12
 
-# define VALID_CHARS "0NSWE"
+# define VALID_CHARS " 10NSWE"
 
 # define W 119
 # define A 97
@@ -66,6 +66,7 @@ typedef enum e_colors
 # define ERR_MINILIBX ERR_MSG "Something wrong hapenned with MiniLibX...\n"
 # define ERR_MALLOC ERR_MSG "Malloc failed\n"
 # define ERR_WEIRD_MAP ERR_MSG "Badly formatted map...\n"
+# define ERR_UNKN_CHAR ERR_MSG "Unknown character '%c' in the map.\n"
 # define DBG_MALLOC DBG_MSG "Malloc failed\n"
 # define ERR_NO_FTYPE ERR_MSG "The file must be a %s file.\n"
 # define ERR_NO_LINE ERR_MSG "Can't get content from map\n"

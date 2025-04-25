@@ -29,6 +29,8 @@ bool	parse_map(t_cub3d *cub3d);
 
 bool    check_player_amount(t_map map);
 
+bool	check_map_unkn_char(t_map map);
+
 bool    check_map_chars(t_map map);
 
 bool	is_map_closed(t_cub3d *cub3d);
