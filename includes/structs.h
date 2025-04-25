@@ -74,7 +74,7 @@ typedef struct s_texture_struct
 typedef struct  s_map
 {
     char        		**map;
-	t_texture_struct   	texture[4];
+	t_texture_struct   	texture[5];
     int         		colors[2];    
     int         		width;
     int         		height;
@@ -92,7 +92,8 @@ typedef enum e_facing
     NORTH,
     SOUTH,
     WEST,
-    EAST
+    EAST,
+	DOOR
 }   t_facing;
 
 typedef struct s_hit

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_texture.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 21:53:49 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/24 17:18:22 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/25 15:28:01 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	init_textures(t_cub3d *cub3d)
 	int	i;
 
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		if (cub3d->map.texture[i].path)
 		{

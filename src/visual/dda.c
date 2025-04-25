@@ -6,7 +6,7 @@
 /*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:57:53 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/25 15:05:51 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/25 15:28:44 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static void	calculate_hit_details(t_cub3d *cub3d, t_ray *ray)
 	ray->hit.x_wall -= floor(ray->hit.x_wall);
 	ray->hit.dist = ray->perpWallDist;
 	ray->hit.type = cub3d->map.map[(int)ray->hit.pos.y][(int)ray->hit.pos.x];
+	if (ray->hit.type == 'D')
+		ray->hit.facing = DOOR;
 }
 
 void	perform_dda(t_cub3d *cub3d, t_ray *ray, bool is_crosshair)

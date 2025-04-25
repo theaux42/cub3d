@@ -3,6 +3,8 @@ SO textures/simonkraft/mossy_cobblestone1.xpm
 WE textures/simonkraft/cobblestone_01.xpm
 EA textures/simonkraft/cobblestone_02.xpm
 
+D textures/door.xpm
+
                                 F                      100           ,              100           ,100
 C 12,12,12
 

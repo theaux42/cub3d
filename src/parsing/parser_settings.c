@@ -3,27 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   parser_settings.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:36 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/24 20:34:29 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/25 15:24:34 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+static int	get_settings_type(char *str)
+{
+	if (ft_strncmp(str, "NO ", 3) == 0)
+		return (NO_TEXTURE);
+	if (ft_strncmp(str, "SO ", 3) == 0)
+		return (SO_TEXTURE);
+	if (ft_strncmp(str, "WE ", 3) == 0)
+		return (WE_TEXTURE);
+	if (ft_strncmp(str, "EA ", 3) == 0)
+		return (EA_TEXTURE);
+	if (ft_strncmp(str, "D ", 2) == 0)
+		return (DOOR_TEXTURE);
+	return (-1);
+}
+
 static bool	parse_textures(t_cub3d *cub3d, char *line, int target)
 {
 	while (*line == '\t' || *line == ' ')
 		line++;
-	if (ft_strncmp(line, "NO ", 3) == 0)
-		target = NO_TEXTURE;
-	if (ft_strncmp(line, "SO ", 3) == 0)
-		target = SO_TEXTURE;
-	if (ft_strncmp(line, "WE ", 3) == 0)
-		target = WE_TEXTURE;
-	if (ft_strncmp(line, "EA ", 3) == 0)
-		target = EA_TEXTURE;
+	target = get_settings_type(line);
 	if (target != -1)
 	{
 		line += 2;

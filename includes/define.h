@@ -23,7 +23,8 @@ typedef enum e_texture
 	NO_TEXTURE = 0,
 	SO_TEXTURE = 1,
 	WE_TEXTURE = 2,
-	EA_TEXTURE = 3
+	EA_TEXTURE = 3,
+	DOOR_TEXTURE = 4,
 } t_texture;
 
 typedef enum e_colors
