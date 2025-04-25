@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:16:43 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/26 00:56:21 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/26 00:58:38 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ unsigned int	get_pixel_from_tex(t_vec2 pos, t_texture_struct tex, t_hit hit)
 		return (0x000000);
 	img = (unsigned int *)tex.data;
 	color = img[pos.y * tex.width + pos.x];
-	color = 0xFFFFFF;
 	shade_factor = 1.0 - fmin(0.7, hit.dist / 15.0);
 	shade_factor = fmax(0.2, shade_factor);
 	direction_shade = 1.0;
