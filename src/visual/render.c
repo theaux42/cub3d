@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 03:44:26 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 03:46:16 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,9 @@ void	raycast(t_cub3d *cub3d)
 {
 	int	x;
 
-	t_ray ray, first, last;
+	t_ray ray;
 	x = 0;
-	perform_dda(cub3d, &first, 0, false);
-	perform_dda(cub3d, &last, WIDTH - 1, false);
-	draw_floor(cub3d, &first, &last);
+	draw_floor(cub3d);
 	while (x < WIDTH)
 	{
 		ray = (t_ray){0};

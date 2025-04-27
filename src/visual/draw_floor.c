@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 02:10:46 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 03:39:23 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 03:45:49 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,20 @@ static void	draw_floor_line(t_floor_data *f, t_cub3d *cub3d)
 	}
 }
 
-void	draw_floor(t_cub3d *cub3d, t_ray *first, t_ray *last)
+void	draw_floor(t_cub3d *cub3d)
 {
 	t_floor_data f;
+	t_ray		first;
+	t_ray		last;
 
+	first = (t_ray){0};
+	last = (t_ray){0};
 	f.y = HEIGHT / 2;
+	perform_dda(cub3d, &first, 0, false);
+	perform_dda(cub3d, &last, WIDTH - 1, false);
 	while (f.y < HEIGHT)
 	{
-		init_floor_line(&f, cub3d, first, last);
+		init_floor_line(&f, cub3d, &first, &last);
 		draw_floor_line(&f, cub3d);
 		f.y++;
 	}
