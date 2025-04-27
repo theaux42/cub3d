@@ -102,6 +102,24 @@ typedef struct s_texture_struct
 	int         height;
 }               t_texture_struct;
 
+typedef struct s_sky_data
+{
+	double				H_FOV;
+	double				start_ang;
+	double				ang;
+
+	t_texture_struct	sky;
+	
+	int					half_h;
+	int					horizon;
+	int					tex_x;
+	int					tex_y;
+	int					color;
+
+	int					x;
+
+} t_sky_data;
+
 typedef struct  s_map
 {
     char        		**map;

@@ -6,14 +6,16 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 06:51:55 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 07:15:11 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+static void horiz_sky_cal(t_cub3d *cub3d, t_sky_data *sky_data, int x, int y);
+
 void	draw_line(t_cub3d *cub3d, t_hit hit, t_texture_struct tex,
-		t_vec2 pcoord)
+		t_vec2 pcoord, t_sky_data *sky_data)
 {
 	t_vec2		texcoord;
 	long long	wall_height;
@@ -31,9 +33,11 @@ void	draw_line(t_cub3d *cub3d, t_hit hit, t_texture_struct tex,
 		texcoord.y = ((double)(pcoord.y - start_y) / wall_height) * tex.height;
 		put_pixel(pcoord, get_pixel_from_tex(texcoord, tex, hit), cub3d);
 	}
+	if (pcoord.y < start_y)
+		horiz_sky_cal(cub3d, sky_data, pcoord.x, pcoord.y);
 }
 
-void	draw_walls(t_cub3d *cub3d, int x, t_hit hit)
+void	draw_walls(t_cub3d *cub3d, int x, t_hit hit, t_sky_data *sky_data)
 {
 	t_texture_struct	tex;
 	t_vec2				pixelcoord;
@@ -44,67 +48,64 @@ void	draw_walls(t_cub3d *cub3d, int x, t_hit hit)
 		tex = cub3d->map.texture[DOOR_TEXTURE];
 	while (pixelcoord.y < HEIGHT)
 	{
-		draw_line(cub3d, hit, tex, pixelcoord);
+		draw_line(cub3d, hit, tex, pixelcoord, sky_data);
 		pixelcoord.y++;
 	}
 }
 
-static void	draw_sky(t_cub3d *c)
+static void	init_sky(t_cub3d *cub3d, t_sky_data *sky_data)
 {
-	t_texture_struct	sky;
-	int					half_h;
-	int					horizon;
-	const double		H_FOV = PI / 2.0;
-	double				start_ang;
-	double				ang;
-	int					tex_x;
-	int					tex_y;
+	sky_data->H_FOV = PI / 2.0;
+	sky_data->sky = cub3d->map.texture[CEILING_TEXTURE];
+	sky_data->half_h = HEIGHT / 2;
+	sky_data->horizon = sky_data->half_h - (int)cub3d->player.pitch;
+	if (sky_data->horizon < 0)
+		sky_data->horizon = 0;
+	if (sky_data->horizon > HEIGHT)
+		sky_data->horizon = HEIGHT;
+	sky_data->start_ang = cub3d->player.angle - sky_data->H_FOV / 2.0;
+	sky_data->x = 0;
+}
 
-	sky = c->map.texture[CEILING_TEXTURE];
-	half_h = HEIGHT / 2;
-	horizon = half_h - (int)c->player.pitch;
-	if (horizon < 0)
-		horizon = 0;
-	if (horizon > HEIGHT)
-		horizon = HEIGHT;
-	start_ang = c->player.angle - H_FOV / 2.0;
-	for (int x = 0; x < WIDTH; x++)
-	{
-		ang = start_ang + ((double)x / (WIDTH - 1)) * H_FOV;
-		// Normalize angle to the range [0, 2*PI)
-		ang = fmod(ang, 2.0 * PI);
-		if (ang < 0)
-			ang += 2.0 * PI;
-		tex_x = (int)((ang / (2.0 * PI)) * sky.width);
-		tex_x = (tex_x % sky.width + sky.width) % sky.width;
-		for (int y = 0; y < horizon; y++)
-		{
-			tex_y = (y * sky.height) / half_h;
-			if (tex_y < 0)
-				tex_y = 0;
-			if (tex_y >= sky.height)
-				tex_y = sky.height - 1;
-			int color = get_pixel_from_tex((t_vec2){tex_x, tex_y}, sky,
-					(t_hit){0}); // Pass dummy hit info
-			put_pixel((t_vec2){x, y}, color, c);
-		}
-	}
+static void	vert_sky_cal(t_sky_data *sky_data, int x)
+{
+	sky_data->ang = sky_data->start_ang + ((double)x / (WIDTH - 1))
+		* sky_data->H_FOV;
+	sky_data->ang = fmod(sky_data->ang, 2.0 * PI);
+	if (sky_data->ang < 0)
+		sky_data->ang += 2.0 * PI;
+	sky_data->tex_x = (int)((sky_data->ang / (2.0 * PI)) * sky_data->sky.width);
+	sky_data->tex_x = (sky_data->tex_x % sky_data->sky.width + sky_data->sky.width)
+		% sky_data->sky.width;
+}
+
+static void horiz_sky_cal(t_cub3d *cub3d, t_sky_data *sky_data, int x, int y)
+{
+	sky_data->tex_y = (y * sky_data->sky.height) / sky_data->half_h;
+	if (sky_data->tex_y < 0)
+		sky_data->tex_y = 0;
+	if (sky_data->tex_y >= sky_data->sky.height)
+		sky_data->tex_y = sky_data->sky.height - 1;
+	sky_data->color = get_pixel_from_tex((t_vec2){sky_data->tex_x,
+			sky_data->tex_y}, sky_data->sky, (t_hit){0});
+	put_pixel((t_vec2){x, y}, sky_data->color, cub3d);
 }
 
 void	raycast(t_cub3d *cub3d)
 {
-	int		x;
-	t_ray	ray;
+	int			x;
+	t_ray		ray;
+	t_sky_data	sky_data;
 
-	// draw skybox before floor and walls
-	draw_sky(cub3d);
-	draw_floor(cub3d);
 	x = 0;
+	init_sky(cub3d, &sky_data);
+	draw_floor(cub3d);
 	while (x < WIDTH)
 	{
 		ray = (t_ray){0};
 		perform_dda(cub3d, &ray, x, false);
-		draw_walls(cub3d, x, ray.hit);
+		vert_sky_cal(&sky_data, x);
+		draw_walls(cub3d, x, ray.hit, &sky_data);
 		if (x == WIDTH / 2)
 			player_crosshair(cub3d);
 		x++;
