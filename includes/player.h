@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:03:55 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/25 15:10:05 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/28 01:54:57 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	player_crosshair(t_cub3d *cub3d);
 bool	is_touching_wall(float origin_x, float origin_y, char **map,
 			bool is_crosshair);
 void	raycast(t_cub3d *cub3d);
+int		on_mouse_move(int x, int y, t_cub3d *cub3d);
 
 #endif

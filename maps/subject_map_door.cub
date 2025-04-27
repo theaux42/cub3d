@@ -1,6 +1,6 @@
-NO textures/wolfenstein/grey_stone.xpm
-SO textures/wolfenstein/purple_stone.xpm
-WE textures/wolfenstein/red_brick.xpm
+NO textures/wolfenstein/wood.xpm
+SO textures/wolfenstein/wood.xpm
+WE textures/wolfenstein/wood.xpm
 EA textures/wolfenstein/wood.xpm
 D textures/door.xpm
 CE textures/sky/pixel-sky.xpm

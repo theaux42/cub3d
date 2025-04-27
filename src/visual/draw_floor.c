@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 02:10:46 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 20:38:53 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 21:33:43 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static void	init_floor_line(t_floor_data *f, t_cub3d *cub3d, t_ray *first,
 		t_ray *last)
 {
-	f->p = f->tex_pos.y - HEIGHT / 2.0;
+	// Apply pitch offset to floor rendering
+	f->p = f->tex_pos.y - HEIGHT / 2.0 - cub3d->player.pitch;
 	f->row_dist = f->pos_z / f->p;
 	f->step.x = f->row_dist * (last->dir.x - first->dir.x) / WIDTH;
 	f->step.y = f->row_dist * (last->dir.y - first->dir.y) / WIDTH;

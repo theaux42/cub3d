@@ -20,6 +20,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <sys/types.h>
+#include <sys/time.h>
 
 #ifndef CUB3D_H
 # define CUB3D_H
