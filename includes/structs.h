@@ -150,17 +150,10 @@ typedef struct s_floor_data
     double      pos_z;
     double      row_dist;
 
-    double      step_x;
-    double      step_y;
-
-    double      x0;
-    double      y0;
-
-    int         cell_x;
-    int         cell_y;
-
-    int         tex_x;
-    int         tex_y;
+	t_dvec2	 	dir; // x0 y0
+	t_dvec2	 	step; // step_x step_y
+	t_vec2		cell; // x y
+	t_vec2		tex_pixel; // x y
 
     unsigned    color;
 
