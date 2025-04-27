@@ -25,7 +25,18 @@ typedef enum e_texture
 	WE_TEXTURE = 2,
 	EA_TEXTURE = 3,
 	DOOR_TEXTURE = 4,
+	FLOOR_TEXTURE = 5,
+	CEILING_TEXTURE = 6,
 } t_texture;
+
+typedef enum e_facing
+{
+    NORTH,
+    SOUTH,
+    WEST,
+    EAST,
+	DOOR
+}   t_facing;
 
 typedef enum e_colors
 {
@@ -38,6 +49,8 @@ typedef enum e_colors
 
 # define BLOCK 128
 # define MINIMAP_SCALE 10
+
+# define TEXTURE_AMOUNT 7
 
 # define PLAYER_SPEED 0.1
 # define CAMERA_SPEED 0.04
@@ -85,6 +98,7 @@ typedef enum e_colors
 # define ERR_MAP_BORDER ERR_MSG "The map is not closed.\n"
 # define ERR_NO_PLAYER ERR_MSG "There is no player on the map.\n"
 # define ERR_TOO_PLAYER ERR_MSG "There is too much player on the map (%i)\n"
+# define ERR_TEXTURE_ID ERR_MSG "Texture ID:%i %s not found.\n"
 # define ERR_TEXTURE ERR_MSG "Texture %s not found.\n"
 
 #endif

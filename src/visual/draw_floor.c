@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 02:10:46 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 03:45:49 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 05:21:07 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ static void	draw_floor_line(t_floor_data *f, t_cub3d *cub3d)
 	{
 		f->cell_x = (int)f->x0;
 		f->cell_y = (int)f->y0;
-		f->tex_x = ((int)(cub3d->map.texture[1].width * (f->x0
-						- f->cell_x))) & (cub3d->map.texture[1].width - 1);
-		f->tex_y = ((int)(cub3d->map.texture[1].height * (f->y0
-						- f->cell_y))) & (cub3d->map.texture[1].height - 1);
+		f->tex_x = ((int)(cub3d->map.texture[FLOOR_TEXTURE].width * (f->x0
+						- f->cell_x))) & (cub3d->map.texture[FLOOR_TEXTURE].width
+				- 1);
+		f->tex_y = ((int)(cub3d->map.texture[FLOOR_TEXTURE].height * (f->y0
+						- f->cell_y))) & (cub3d->map.texture[FLOOR_TEXTURE].height
+				- 1);
 		f->color = get_pixel_from_tex((t_vec2){f->tex_x, f->tex_y},
-				cub3d->map.texture[1], (t_hit){0});
+				cub3d->map.texture[FLOOR_TEXTURE], (t_hit){0});
 		put_pixel((t_vec2){f->x, f->y}, f->color, cub3d);
 		f->x0 += f->step_x;
 		f->y0 += f->step_y;
@@ -53,8 +55,8 @@ static void	draw_floor_line(t_floor_data *f, t_cub3d *cub3d)
 void	draw_floor(t_cub3d *cub3d)
 {
 	t_floor_data f;
-	t_ray		first;
-	t_ray		last;
+	t_ray first;
+	t_ray last;
 
 	first = (t_ray){0};
 	last = (t_ray){0};

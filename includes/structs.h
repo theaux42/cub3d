@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "define.h"
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
@@ -81,7 +82,7 @@ typedef struct s_floor_data
     int         tex_y;
 
     unsigned    color;
-	
+
     int         y;
     int         x;
 
@@ -104,7 +105,7 @@ typedef struct s_texture_struct
 typedef struct  s_map
 {
     char        		**map;
-	t_texture_struct   	texture[5];
+	t_texture_struct   	texture[TEXTURE_AMOUNT + 1];
     int         		colors[2];    
     int         		width;
     int         		height;
@@ -116,15 +117,6 @@ typedef struct  s_map_line
     char               *line;
     struct s_map_line  *next;
 }               t_map_line;
-
-typedef enum e_facing
-{
-    NORTH,
-    SOUTH,
-    WEST,
-    EAST,
-	DOOR
-}   t_facing;
 
 typedef struct s_hit
 {

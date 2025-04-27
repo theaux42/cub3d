@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_settings.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:36 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/25 15:24:34 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/27 05:25:39 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ static int	get_settings_type(char *str)
 		return (WE_TEXTURE);
 	if (ft_strncmp(str, "EA ", 3) == 0)
 		return (EA_TEXTURE);
+	if (ft_strncmp(str, "FL ", 3) == 0)
+		return (FLOOR_TEXTURE);
+	if (ft_strncmp(str, "CE ", 3) == 0)
+		return (CEILING_TEXTURE);
 	if (ft_strncmp(str, "D ", 2) == 0)
 		return (DOOR_TEXTURE);
 	return (-1);
@@ -42,6 +46,7 @@ static bool	parse_textures(t_cub3d *cub3d, char *line, int target)
 		cub3d->map.texture[target].path = ft_strtrim(line, " \t\n\r");
 		if (!cub3d->map.texture[target].path)
 			return (ft_dprintf(2, DBG_MALLOC), true);
+		ft_printf("[%i] Texture %s\n", target, cub3d->map.texture[target].path);
 	}
 	return (false);
 }

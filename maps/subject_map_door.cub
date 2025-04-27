@@ -2,10 +2,11 @@ NO textures/wolfenstein/grey_stone.xpm
 SO textures/wolfenstein/purple_stone.xpm
 WE textures/wolfenstein/red_brick.xpm
 EA textures/wolfenstein/wood.xpm
-
 D textures/door.xpm
+CE textures/door.xpm
+FL textures/grass_floor.xpm
 
-F 33,110,64
+F 39,80,138
 C 39,80,138
 
         1111111111111111111111111

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:24 by tbabou            #+#    #+#             */
-/*   Updated: 2025/03/30 00:58:52 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/27 05:22:45 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	is_finished(t_cub3d *cub3d)
 	int	i;
 
 	i = 0;
-	while (i <= 3)
+	while (i < TEXTURE_AMOUNT)
 	{
 		if (cub3d->map.texture[i].path == NULL)
 			return (false);
