@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_doors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:20:05 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/25 15:17:49 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/27 03:43:22 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	player_crosshair(t_cub3d *cub3d)
 	t_ray ray_middle;
 
 	ray_middle = (t_ray){0};
-	perform_calculation(cub3d, &ray_middle, WIDTH / 2);
-	perform_dda(cub3d, &ray_middle, true);
+	perform_dda(cub3d, &ray_middle, WIDTH / 2, true);
 	draw_crosshair(cub3d, &ray_middle);
 	if (cub3d->player.interact && (ray_middle.hit.type == 'D'
 			|| ray_middle.hit.type == 'd'))

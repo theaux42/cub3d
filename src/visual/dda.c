@@ -6,27 +6,55 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:57:53 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/26 00:52:18 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 03:43:42 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	is_touching_wall(float origin_x, float origin_y, char **map,
-		bool is_crosshair)
+static void	perform_initial_step(t_cub3d *cub3d, t_ray *ray)
 {
-	int	x;
-	int	y;
+	if (ray->dir.x < 0)
+	{
+		ray->step.x = -1;
+		ray->side_dist.x = (cub3d->player.pos.x - ray->map_pos.x)
+			* ray->delta_dist.x;
+	}
+	else
+	{
+		ray->step.x = 1;
+		ray->side_dist.x = (ray->map_pos.x + 1.0 - cub3d->player.pos.x)
+			* ray->delta_dist.x;
+	}
+	if (ray->dir.y < 0)
+	{
+		ray->step.y = -1;
+		ray->side_dist.y = (cub3d->player.pos.y - ray->map_pos.y)
+			* ray->delta_dist.y;
+	}
+	else
+	{
+		ray->step.y = 1;
+		ray->side_dist.y = (ray->map_pos.y + 1.0 - cub3d->player.pos.y)
+			* ray->delta_dist.y;
+	}
+}
 
-	x = (int)origin_x;
-	y = (int)origin_y;
-	if (x < 0 || y < 0)
-		return (true);
-	if (is_crosshair && map[y][x] == 'd')
-		return (true);
-	if (map[y][x] == '1' || map[y][x] == 'D')
-		return (true);
-	return (false);
+static void	perform_calculation(t_cub3d *cub3d, t_ray *ray, int x)
+{
+	ray->cameraX = 1 - 2 * x / (double)WIDTH;
+	ray->dir.x = cos(cub3d->player.angle) + cub3d->player.plane.x
+		* ray->cameraX;
+	ray->dir.y = sin(cub3d->player.angle) + cub3d->player.plane.y
+		* ray->cameraX;
+	ray->map_pos.x = (int)cub3d->player.pos.x;
+	ray->map_pos.y = (int)cub3d->player.pos.y;
+	ray->delta_dist = (t_dvec2){1e30, 1e30};
+	if (ray->dir.x != 0)
+		ray->delta_dist.x = fabs(1 / ray->dir.x);
+	if (ray->dir.y != 0)
+		ray->delta_dist.y = fabs(1 / ray->dir.y);
+	perform_initial_step(cub3d, ray);
 }
 
 static void	run_dda_loop(t_cub3d *cub3d, t_ray *ray, bool is_crosshair)
@@ -79,8 +107,9 @@ static void	calculate_hit_details(t_cub3d *cub3d, t_ray *ray)
 		ray->hit.is_door = true;
 }
 
-void	perform_dda(t_cub3d *cub3d, t_ray *ray, bool is_crosshair)
+void	perform_dda(t_cub3d *cub3d, t_ray *ray, int x, bool is_crosshair)
 {
+	perform_calculation(cub3d, ray, x);
 	run_dda_loop(cub3d, ray, is_crosshair);
 	calculate_hit_details(cub3d, ray);
 }

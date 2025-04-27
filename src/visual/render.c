@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 02:03:36 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 03:44:26 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,108 +49,19 @@ void	draw_walls(t_cub3d *cub3d, int x, t_hit hit)
 	}
 }
 
-void	perform_initial_step(t_cub3d *cub3d, t_ray *ray)
-{
-	if (ray->dir.x < 0)
-	{
-		ray->step.x = -1;
-		ray->side_dist.x = (cub3d->player.pos.x - ray->map_pos.x)
-			* ray->delta_dist.x;
-	}
-	else
-	{
-		ray->step.x = 1;
-		ray->side_dist.x = (ray->map_pos.x + 1.0 - cub3d->player.pos.x)
-			* ray->delta_dist.x;
-	}
-	if (ray->dir.y < 0)
-	{
-		ray->step.y = -1;
-		ray->side_dist.y = (cub3d->player.pos.y - ray->map_pos.y)
-			* ray->delta_dist.y;
-	}
-	else
-	{
-		ray->step.y = 1;
-		ray->side_dist.y = (ray->map_pos.y + 1.0 - cub3d->player.pos.y)
-			* ray->delta_dist.y;
-	}
-}
-
-void	perform_calculation(t_cub3d *cub3d, t_ray *ray, int x)
-{
-	ray->cameraX = 1 - 2 * x / (double)WIDTH;
-	ray->dir.x = cos(cub3d->player.angle) + cub3d->player.plane.x
-		* ray->cameraX;
-	ray->dir.y = sin(cub3d->player.angle) + cub3d->player.plane.y
-		* ray->cameraX;
-	ray->map_pos.x = (int)cub3d->player.pos.x;
-	ray->map_pos.y = (int)cub3d->player.pos.y;
-	ray->delta_dist = (t_dvec2){1e30, 1e30};
-	if (ray->dir.x != 0)
-		ray->delta_dist.x = fabs(1 / ray->dir.x);
-	if (ray->dir.y != 0)
-		ray->delta_dist.y = fabs(1 / ray->dir.y);
-	perform_initial_step(cub3d, ray);
-}
-
-void	draw_floor(t_cub3d *cub3d, t_ray *first, t_ray *last)
-{
-	double			p;
-	double			posZ;
-	double			rowDistance;
-	double			floorStepX;
-	double			floorStepY;
-	double			floorX;
-	double			floorY;
-	int				cellX;
-	int				cellY;
-	int				tx;
-	int				ty;
-	unsigned int	color;
-
-	for (int y = HEIGHT / 2; y < HEIGHT; ++y)
-	{
-		p = y - HEIGHT / 2.0;
-		posZ = HEIGHT * 0.5;
-		rowDistance = posZ / p;
-		floorStepX = rowDistance * (last->dir.x - first->dir.x) / WIDTH;
-		floorStepY = rowDistance * (last->dir.y - first->dir.y) / WIDTH;
-		floorX = cub3d->player.pos.x + rowDistance * first->dir.x;
-		floorY = cub3d->player.pos.y + rowDistance * first->dir.y;
-		for (int x = 0; x < WIDTH; ++x)
-		{
-			cellX = (int)floorX;
-			cellY = (int)floorY;
-			tx = (int)(cub3d->map.texture[1].width * (floorX
-						- cellX)) & (cub3d->map.texture[1].width - 1);
-			ty = (int)(cub3d->map.texture[1].height * (floorY
-						- cellY)) & (cub3d->map.texture[1].height - 1);
-			color = get_pixel_from_tex((t_vec2){tx, ty}, cub3d->map.texture[1],
-					(t_hit){0});
-			put_pixel((t_vec2){x, y}, color, cub3d);
-			floorX += floorStepX;
-			floorY += floorStepY;
-		}
-	}
-}
-
 void	raycast(t_cub3d *cub3d)
 {
 	int	x;
 
 	t_ray ray, first, last;
 	x = 0;
-	perform_calculation(cub3d, &first, 0);
-	perform_dda(cub3d, &first, false);
-	perform_calculation(cub3d, &last, WIDTH - 1);
-	perform_dda(cub3d, &last, false);
+	perform_dda(cub3d, &first, 0, false);
+	perform_dda(cub3d, &last, WIDTH - 1, false);
 	draw_floor(cub3d, &first, &last);
 	while (x < WIDTH)
 	{
 		ray = (t_ray){0};
-		perform_calculation(cub3d, &ray, x);
-		perform_dda(cub3d, &ray, false);
+		perform_dda(cub3d, &ray, x, false);
 		draw_walls(cub3d, x, ray.hit);
 		if (x == WIDTH / 2)
 			player_crosshair(cub3d);
