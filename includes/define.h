@@ -44,8 +44,8 @@ typedef enum e_colors
 	CEILING = 1
 } t_colors;
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1500
+# define HEIGHT 844
 
 # define BLOCK 128
 # define MINIMAP_SCALE 10

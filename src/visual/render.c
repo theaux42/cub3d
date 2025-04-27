@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 03:46:16 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 06:51:55 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,57 @@ void	draw_walls(t_cub3d *cub3d, int x, t_hit hit)
 	}
 }
 
+static void	draw_sky(t_cub3d *c)
+{
+	t_texture_struct	sky;
+	int					half_h;
+	int					horizon;
+	const double		H_FOV = PI / 2.0;
+	double				start_ang;
+	double				ang;
+	int					tex_x;
+	int					tex_y;
+
+	sky = c->map.texture[CEILING_TEXTURE];
+	half_h = HEIGHT / 2;
+	horizon = half_h - (int)c->player.pitch;
+	if (horizon < 0)
+		horizon = 0;
+	if (horizon > HEIGHT)
+		horizon = HEIGHT;
+	start_ang = c->player.angle - H_FOV / 2.0;
+	for (int x = 0; x < WIDTH; x++)
+	{
+		ang = start_ang + ((double)x / (WIDTH - 1)) * H_FOV;
+		// Normalize angle to the range [0, 2*PI)
+		ang = fmod(ang, 2.0 * PI);
+		if (ang < 0)
+			ang += 2.0 * PI;
+		tex_x = (int)((ang / (2.0 * PI)) * sky.width);
+		tex_x = (tex_x % sky.width + sky.width) % sky.width;
+		for (int y = 0; y < horizon; y++)
+		{
+			tex_y = (y * sky.height) / half_h;
+			if (tex_y < 0)
+				tex_y = 0;
+			if (tex_y >= sky.height)
+				tex_y = sky.height - 1;
+			int color = get_pixel_from_tex((t_vec2){tex_x, tex_y}, sky,
+					(t_hit){0}); // Pass dummy hit info
+			put_pixel((t_vec2){x, y}, color, c);
+		}
+	}
+}
+
 void	raycast(t_cub3d *cub3d)
 {
-	int	x;
+	int		x;
+	t_ray	ray;
 
-	t_ray ray;
-	x = 0;
+	// draw skybox before floor and walls
+	draw_sky(cub3d);
 	draw_floor(cub3d);
+	x = 0;
 	while (x < WIDTH)
 	{
 		ray = (t_ray){0};
