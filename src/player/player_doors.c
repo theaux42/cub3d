@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:20:05 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/27 03:43:22 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 20:42:02 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,9 @@
 void	manage_door(t_cub3d *cub3d, t_ray *ray)
 {
 	if (ray->hit.type == 'D')
-	{
-		ft_printf("[%i] Player opened a door at (%d, %d)\n",
-			(int)ray->map_pos.x, (int)ray->map_pos.y);
 		cub3d->map.map[(int)ray->map_pos.y][(int)ray->map_pos.x] = 'd';
-	}
 	else if (ray->hit.type == 'd')
-	{
-		ft_printf("[%i] Player closed a door at (%d, %d)\n",
-			(int)ray->map_pos.x, (int)ray->map_pos.y);
 		cub3d->map.map[(int)ray->map_pos.y][(int)ray->map_pos.x] = 'D';
-	}
-	ft_printf("=========================\n");
 }
 
 void	player_crosshair(t_cub3d *cub3d)

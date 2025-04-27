@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 18:55:02 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 18:55:38 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 20:41:39 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,20 @@ void	vert_sky_cal(t_sky_data *sky_data, int x)
 	sky_data->ang = fmod(sky_data->ang, 2.0 * PI);
 	if (sky_data->ang < 0)
 		sky_data->ang += 2.0 * PI;
-	sky_data->tex_x = (int)((sky_data->ang / (2.0 * PI)) * sky_data->sky.width);
-	sky_data->tex_x = (sky_data->tex_x % sky_data->sky.width
+	sky_data->tex_pos.x = (int)((sky_data->ang / (2.0 * PI))
+			* sky_data->sky.width);
+	sky_data->tex_pos.x = (sky_data->tex_pos.x % sky_data->sky.width
 			+ sky_data->sky.width) % sky_data->sky.width;
 }
 
 void	horiz_sky_cal(t_cub3d *cub3d, t_sky_data *sky_data, int x, int y)
 {
-	sky_data->tex_y = (y * sky_data->sky.height) / sky_data->half_h;
-	if (sky_data->tex_y < 0)
-		sky_data->tex_y = 0;
-	if (sky_data->tex_y >= sky_data->sky.height)
-		sky_data->tex_y = sky_data->sky.height - 1;
-	sky_data->color = get_pixel_from_tex((t_vec2){sky_data->tex_x,
-			sky_data->tex_y}, sky_data->sky, (t_hit){0});
+	sky_data->tex_pos.y = (y * sky_data->sky.height) / sky_data->half_h;
+	if (sky_data->tex_pos.y < 0)
+		sky_data->tex_pos.y = 0;
+	if (sky_data->tex_pos.y >= sky_data->sky.height)
+		sky_data->tex_pos.y = sky_data->sky.height - 1;
+	sky_data->color = get_pixel_from_tex((t_vec2){sky_data->tex_pos.x,
+			sky_data->tex_pos.y}, sky_data->sky, (t_hit){0});
 	put_pixel((t_vec2){x, y}, sky_data->color, cub3d);
 }

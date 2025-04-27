@@ -84,11 +84,12 @@ typedef struct s_sky_data
 	double				ang;
 
 	t_texture_struct	sky;
+
+	t_vec2				tex_pos;
 	
 	int					half_h;
 	int					horizon;
-	int					tex_x;
-	int					tex_y;
+
 	int					color;
 
 	int					x;
