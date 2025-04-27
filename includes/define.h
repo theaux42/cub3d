@@ -44,8 +44,8 @@ typedef enum e_colors
 	CEILING = 1
 } t_colors;
 
-# define WIDTH 1500
-# define HEIGHT 844
+# define WIDTH 1280
+# define HEIGHT 720
 
 # define BLOCK 128
 # define MINIMAP_SCALE 10
@@ -53,7 +53,7 @@ typedef enum e_colors
 # define TEXTURE_AMOUNT 7
 
 # define PLAYER_SPEED 0.1
-# define CAMERA_SPEED 0.04
+# define CAMERA_SPEED 0.1
 
 # define VALID_CHARS " 10NSWEDd"
 

@@ -63,31 +63,6 @@ typedef struct  s_player
     bool        look_down;
 }               t_player;
 
-typedef struct s_floor_data
-{
-    double      p;
-    double      pos_z;
-    double      row_dist;
-
-    double      step_x;
-    double      step_y;
-
-    double      x0;
-    double      y0;
-
-    int         cell_x;
-    int         cell_y;
-
-    int         tex_x;
-    int         tex_y;
-
-    unsigned    color;
-
-    int         y;
-    int         x;
-
-} t_floor_data;
-
 typedef struct s_texture_struct
 {
 	char        *path;
@@ -168,6 +143,33 @@ typedef struct s_ray
     double	perpWallDist;
     double	wallX;
 }	t_ray;
+
+typedef struct s_floor_data
+{
+    double      p;
+    double      pos_z;
+    double      row_dist;
+
+    double      step_x;
+    double      step_y;
+
+    double      x0;
+    double      y0;
+
+    int         cell_x;
+    int         cell_y;
+
+    int         tex_x;
+    int         tex_y;
+
+    unsigned    color;
+
+	t_ray		first;
+	t_ray		last;
+
+	t_vec2		tex_pos;
+
+} t_floor_data;
 
 typedef struct s_cub3d
 {

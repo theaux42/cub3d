@@ -6,16 +6,16 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 07:15:11 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/27 18:35:56 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void horiz_sky_cal(t_cub3d *cub3d, t_sky_data *sky_data, int x, int y);
+static void	horiz_sky_cal(t_cub3d *cub3d, t_sky_data *sky_data, int x, int y);
 
 void	draw_line(t_cub3d *cub3d, t_hit hit, t_texture_struct tex,
-		t_vec2 pcoord, t_sky_data *sky_data)
+		t_vec2 pcoord, t_sky_data *sky_data, t_floor_data *floor_data)
 {
 	t_vec2		texcoord;
 	long long	wall_height;
@@ -35,9 +35,16 @@ void	draw_line(t_cub3d *cub3d, t_hit hit, t_texture_struct tex,
 	}
 	if (pcoord.y < start_y)
 		horiz_sky_cal(cub3d, sky_data, pcoord.x, pcoord.y);
+	if (pcoord.y >= end)
+	{
+		floor_data->tex_pos.y = pcoord.y;
+		floor_data->tex_pos.x = pcoord.x;
+		init_floor(cub3d, floor_data);
+	}
 }
 
-void	draw_walls(t_cub3d *cub3d, int x, t_hit hit, t_sky_data *sky_data)
+void	draw_walls(t_cub3d *cub3d, int x, t_hit hit, t_sky_data *sky_data,
+		t_floor_data *floor_data)
 {
 	t_texture_struct	tex;
 	t_vec2				pixelcoord;
@@ -48,7 +55,7 @@ void	draw_walls(t_cub3d *cub3d, int x, t_hit hit, t_sky_data *sky_data)
 		tex = cub3d->map.texture[DOOR_TEXTURE];
 	while (pixelcoord.y < HEIGHT)
 	{
-		draw_line(cub3d, hit, tex, pixelcoord, sky_data);
+		draw_line(cub3d, hit, tex, pixelcoord, sky_data, floor_data);
 		pixelcoord.y++;
 	}
 }
@@ -75,11 +82,11 @@ static void	vert_sky_cal(t_sky_data *sky_data, int x)
 	if (sky_data->ang < 0)
 		sky_data->ang += 2.0 * PI;
 	sky_data->tex_x = (int)((sky_data->ang / (2.0 * PI)) * sky_data->sky.width);
-	sky_data->tex_x = (sky_data->tex_x % sky_data->sky.width + sky_data->sky.width)
-		% sky_data->sky.width;
+	sky_data->tex_x = (sky_data->tex_x % sky_data->sky.width
+			+ sky_data->sky.width) % sky_data->sky.width;
 }
 
-static void horiz_sky_cal(t_cub3d *cub3d, t_sky_data *sky_data, int x, int y)
+static void	horiz_sky_cal(t_cub3d *cub3d, t_sky_data *sky_data, int x, int y)
 {
 	sky_data->tex_y = (y * sky_data->sky.height) / sky_data->half_h;
 	if (sky_data->tex_y < 0)
@@ -93,19 +100,22 @@ static void horiz_sky_cal(t_cub3d *cub3d, t_sky_data *sky_data, int x, int y)
 
 void	raycast(t_cub3d *cub3d)
 {
-	int			x;
-	t_ray		ray;
-	t_sky_data	sky_data;
+	int				x;
+	t_ray			ray;
+	t_sky_data		sky_data;
+	t_floor_data	floor_data;
 
 	x = 0;
 	init_sky(cub3d, &sky_data);
-	draw_floor(cub3d);
+	perform_dda(cub3d, &floor_data.first, 0, false);
+	perform_dda(cub3d, &floor_data.last, WIDTH - 1, false);
+	floor_data.pos_z = HEIGHT / 2;
 	while (x < WIDTH)
 	{
 		ray = (t_ray){0};
 		perform_dda(cub3d, &ray, x, false);
 		vert_sky_cal(&sky_data, x);
-		draw_walls(cub3d, x, ray.hit, &sky_data);
+		draw_walls(cub3d, x, ray.hit, &sky_data, &floor_data);
 		if (x == WIDTH / 2)
 			player_crosshair(cub3d);
 		x++;
