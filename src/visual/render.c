@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 21:33:43 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/29 11:13:13 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	draw_line(t_cub3d *cub3d, t_hit hit, t_texture_struct tex,
 	int			end;
 
 	wall_height = (HEIGHT / hit.dist);
-	// Apply pitch offset to wall rendering
 	start_y = HEIGHT / 2 - wall_height / 2 + (int)cub3d->player.pitch;
 	end = start_y + wall_height;
 	texcoord.x = hit.x_wall * tex.width;
