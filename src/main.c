@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 01:50:06 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/28 01:55:15 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/29 14:02:41 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	render(t_cub3d *cub3d)
 {
 	raycast(cub3d);
 	player_key_handler(&cub3d->player, cub3d->map.map);
+	player_crosshair(cub3d);
 	mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img, 0, 0);
 	draw_fps_counter(cub3d);
 	return (0);

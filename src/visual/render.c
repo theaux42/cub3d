@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/29 11:13:13 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/29 14:02:32 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	draw_line(t_cub3d *cub3d, t_hit hit, t_texture_struct tex,
 		texcoord.y = ((double)(pcoord.y - start_y) / wall_height) * tex.height;
 		put_pixel(pcoord, get_pixel_from_tex(texcoord, tex, hit), cub3d);
 	}
-	if (pcoord.y < start_y)
+	else if (pcoord.y < start_y)
 		horiz_sky_cal(cub3d, sky_data, pcoord.x, pcoord.y);
-	if (pcoord.y >= end)
+	else if (pcoord.y >= end)
 	{
 		floor_data->tex_pos.y = pcoord.y;
 		floor_data->tex_pos.x = pcoord.x;
@@ -76,8 +76,6 @@ void	raycast(t_cub3d *cub3d)
 		perform_dda(cub3d, &ray, x, false);
 		vert_sky_cal(&sky_data, x);
 		draw_walls(cub3d, x, ray.hit, &sky_data, &floor_data);
-		if (x == WIDTH / 2)
-			player_crosshair(cub3d);
 		x++;
 	}
 }
