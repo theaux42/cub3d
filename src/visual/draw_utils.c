@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:16:43 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/24 20:24:00 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/29 15:26:26 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,28 +70,4 @@ void	draw_square(t_vec2 coords, int size, int color, t_cub3d *cub3d)
 		}
 		pos.y++;
 	}
-}
-
-void	draw_map(t_cub3d *cub3d)
-{
-	t_vec2	dCoords;
-	t_vec2	pCoords;
-
-	dCoords = (t_vec2){.x = 0, .y = 0};
-	pCoords = (t_vec2){.x = 0, .y = 0};
-	pCoords.x = (int)cub3d->player.pos.x * MINIMAP_SCALE + 30;
-	pCoords.y = (int)cub3d->player.pos.y * MINIMAP_SCALE + 30;
-	while (cub3d->map.map[dCoords.y])
-	{
-		dCoords.x = 0;
-		while (cub3d->map.map[dCoords.x][dCoords.y])
-		{
-			if (cub3d->map.map[dCoords.x][dCoords.y] == '1')
-				draw_square(dCoords, MINIMAP_SCALE, 0x000000,
-					cub3d);
-			dCoords.x += MINIMAP_SCALE;
-		}
-		dCoords.y += MINIMAP_SCALE;
-	}
-	draw_square(pCoords, MINIMAP_SCALE, 0xFFFF00, cub3d);
 }
