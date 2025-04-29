@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:36 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/27 05:25:39 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/29 11:20:34 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,49 +51,6 @@ static bool	parse_textures(t_cub3d *cub3d, char *line, int target)
 	return (false);
 }
 
-static bool	check_colors(char **colors, int *color)
-{
-	if (!colors)
-		return (ft_dprintf(2, ERR_MALLOC), true);
-	if (*color != -1)
-		return (ft_freesplit(colors), true);
-	(*color) = -1;
-	if (ft_split_len(colors) != 3)
-		return ((ft_dprintf(2, ERR_COLOR_FORMAT), ft_freesplit(colors)), true);
-	if (ft_strlen(colors[0]) <= 0 || ft_strlen(colors[1]) <= 0
-		|| ft_strlen(colors[2]) <= 0)
-		return ((ft_dprintf(2, ERR_COLOR_FORMAT), ft_freesplit(colors)), true);
-	(*color) = get_trgb(0, ft_atoi(colors[0]), ft_atoi(colors[1]),
-			ft_atoi(colors[2]));
-	if ((*color) != -1)
-		return (ft_freesplit(colors), false);
-	return (ft_freesplit(colors), true);
-}
-
-static bool	parse_colors(t_cub3d *cub3d, char *line, int target)
-{
-	char	**split;
-
-	while (*line == '\t' || *line == ' ')
-		line++;
-	if (ft_strncmp(line, "F ", 2) == 0)
-		target = FLOOR;
-	if (ft_strncmp(line, "C ", 2) == 0)
-		target = CEILING;
-	if (target != -1)
-	{
-		line++;
-		while (*line == '\t' || *line == ' ')
-			line++;
-		line[ft_strlen(line) - 1] = '\0';
-		split = ft_split(line, ',');
-		if (check_colors(split, &cub3d->map.colors[target]))
-			return (true);
-		return (false);
-	}
-	return (false);
-}
-
 bool	parse_settings(t_cub3d *cub3d)
 {
 	char	*line;
@@ -104,8 +61,6 @@ bool	parse_settings(t_cub3d *cub3d)
 	while (line && !is_finished(cub3d))
 	{
 		if (parse_textures(cub3d, line, -1))
-			return (free(line), true);
-		if (parse_colors(cub3d, line, -1))
 			return (free(line), true);
 		free(line);
 		if (!is_finished(cub3d))

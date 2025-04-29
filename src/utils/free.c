@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 00:30:54 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/24 17:12:23 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/29 11:26:30 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	free_cub3d(t_cub3d *cub3d)
 	i = 0;
 	if (!cub3d)
 		return ;
-	while (i < 4)
+	while (i < 7)
 	{
 		if (cub3d->map.texture[i].img)
 			mlx_destroy_image(cub3d->mlx, cub3d->map.texture[i].img);

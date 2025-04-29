@@ -37,7 +37,6 @@ bool	is_map_closed(t_cub3d *cub3d);
 
 bool    is_map_valid(t_cub3d *cub3d);
 
-bool	settings_checker(t_cub3d *cub3d);
 
 void	destroy_mlx(t_cub3d *cub3d);
 

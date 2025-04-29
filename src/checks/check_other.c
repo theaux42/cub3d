@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_other.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:18:25 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/25 14:14:34 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/04/29 11:20:11 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,6 @@
 static bool	is_playerchr(char c)
 {
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
-
-bool	settings_checker(t_cub3d *cub3d)
-{
-	if (cub3d->map.colors[FLOOR] == -1)
-		return (ft_dprintf(2, ERR_COLOR_FORMAT), true);
-	if (cub3d->map.colors[CEILING] == -1)
-		return (ft_dprintf(2, ERR_COLOR_FORMAT), true);
-	return (false);
 }
 
 bool	check_map_chars(t_map map)

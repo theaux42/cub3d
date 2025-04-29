@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:24 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/27 05:22:45 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/29 11:20:05 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,5 @@ bool	is_finished(t_cub3d *cub3d)
 			return (false);
 		i++;
 	}
-	if (cub3d->map.colors[FLOOR] == -1)
-		return (false);
-	if (cub3d->map.colors[CEILING] == -1)
-		return (false);
 	return (true);
 }

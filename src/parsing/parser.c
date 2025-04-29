@@ -16,8 +16,6 @@ bool	init_parsing(t_cub3d *cub3d)
 {
 	if (parse_settings(cub3d))
 		return (true);
-	if (settings_checker(cub3d))
-		return (true);
 	if (parse_map(cub3d))
 		return (true);
 	if (init_player(cub3d->map.map, &cub3d->player))
