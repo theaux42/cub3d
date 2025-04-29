@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:22:51 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/24 17:16:37 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/29 11:13:47 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ bool	init_minilibx(t_cub3d *cub3d)
 
 bool	init_cub3d(t_cub3d *cub3d, char *map_file)
 {
-	if (ft_strncmp(map_file + ft_strlen(map_file) - 4, ".cub", 4) != 0)
-		return (ft_dprintf(2, ERR_NO_FTYPE, ".cub"), true);
+	if (ft_strncmp(map_file + ft_strlen(map_file) - 8, ".cubonus", 9) != 0)
+		return (ft_dprintf(2, ERR_NO_FTYPE, ".cubonus"), true);
 	cub3d->fd = open(map_file, O_RDONLY);
 	if (cub3d->fd < 0)
 		return (ft_dprintf(2, "%s%s\n", DBG_MSG, strerror(errno)), true);
