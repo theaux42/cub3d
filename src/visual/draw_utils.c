@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:16:43 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/26 00:58:38 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/29 18:40:25 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,29 @@ unsigned int	get_pixel_from_tex(t_vec2 pos, t_texture_struct tex, t_hit hit)
 	rgb.g = ((color >> 8) & 0xFF) * shade_factor;
 	rgb.b = (color & 0xFF) * shade_factor;
 	return ((rgb.r << 16) | (rgb.g << 8) | rgb.b);
+}
+
+void	draw_square(t_cub3d *cub3d, t_vec2 pos, int size, int color)
+{
+	t_vec2			cursor;
+	unsigned int	*img;
+	unsigned int	*row;
+
+	if (pos.x >= WIDTH || pos.y >= HEIGHT || pos.x < 0 || pos.y < 0)
+		return ;
+	cursor = (t_vec2){0, 0};
+	img = (unsigned int *)cub3d->data;
+	while (cursor.y < size)
+	{
+		row = img + ((pos.y + cursor.y) * WIDTH + pos.x);
+		cursor.x = 0;
+		while (cursor.x < size)
+		{
+			row[cursor.x] = (unsigned int)color;
+			cursor.x++;
+		}
+		cursor.y++;
+	}
 }
 
 void	put_pixel(t_vec2 pos, int color, t_cub3d *cub3d)

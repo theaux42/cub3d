@@ -27,6 +27,7 @@ typedef enum e_texture
 	DOOR_TEXTURE = 4,
 	FLOOR_TEXTURE = 5,
 	CEILING_TEXTURE = 6,
+	SPRITE_TEXTURE = 7
 } t_texture;
 
 typedef enum e_facing
@@ -38,24 +39,22 @@ typedef enum e_facing
 	DOOR
 }   t_facing;
 
-typedef enum e_colors
-{
-	FLOOR = 0,
-	CEILING = 1
-} t_colors;
-
 # define WIDTH 1280
 # define HEIGHT 720
 
 # define BLOCK 128
-# define MINIMAP_SCALE 10
 
-# define TEXTURE_AMOUNT 7
+# define MINIMAP_SCALE 8
+# define MINIMAP_OFFSET_X 10
+# define MINIMAP_OFFSET_Y 10
+# define MINIMAP_PLAYER_SIZE 4
+
+# define TEXTURE_AMOUNT 8
 
 # define PLAYER_SPEED 0.1
 # define CAMERA_SPEED 0.1
 
-# define VALID_CHARS " 10NSWEDd"
+# define VALID_CHARS " 10NSWEDds"
 
 # define CROSSHAIR_SIZE 6
 

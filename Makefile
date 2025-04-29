@@ -1,5 +1,5 @@
 COMPILER = cc
-CFLAGS = -Wall -Wextra -Werror -O3 
+CFLAGS = -Wall -Wextra -Werror -O3
 OUTPUT = cub3d
 
 LIBFT_DIR = ./libs/libft
@@ -14,7 +14,7 @@ PARSING_FILES = parser.c parser_settings.c parser_texture.c parser_utils.c \
 CHECKER_FILES = check.c check_floodfill.c check_other.c
 PLAYER_FILES = player.c player_doors.c player_keys.c player_movement.c
 VISUAL_FILES = dda.c dda_utils.c render.c crosshair.c draw_floor.c draw_utils.c \
-		draw_sky.c
+		draw_sky.c draw_minimap.c
 
 PARSING = $(addprefix src/parsing/, $(PARSING_FILES))
 CHECKER = $(addprefix src/checks/, $(CHECKER_FILES))

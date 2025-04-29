@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:36 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/29 11:20:34 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/29 18:58:23 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int	get_settings_type(char *str)
 		return (CEILING_TEXTURE);
 	if (ft_strncmp(str, "D ", 2) == 0)
 		return (DOOR_TEXTURE);
+	if (ft_strncmp(str, "S ", 2) == 0)
+		return (SPRITE_TEXTURE);
 	return (-1);
 }
 
