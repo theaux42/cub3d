@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+      
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2025/02/07 23:10:25 by tbabou            #+#    #+#             */
 /*   Updated: 2025/02/07 23:10:25 by tbabou           ###   ########.fr       */
@@ -32,12 +32,12 @@ typedef enum e_texture
 
 typedef enum e_facing
 {
-    NORTH,
-    SOUTH,
-    WEST,
-    EAST,
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST,
 	DOOR
-}   t_facing;
+} t_facing;
 
 # define WIDTH 1280
 # define HEIGHT 720
@@ -52,7 +52,7 @@ typedef enum e_facing
 # define TEXTURE_AMOUNT 8
 
 # define PLAYER_SPEED 0.1
-# define CAMERA_SPEED 0.1
+# define CAMERA_SPEED 0.05
 
 # define VALID_CHARS " 10NSWEDds"
 

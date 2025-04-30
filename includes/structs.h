@@ -165,22 +165,33 @@ typedef struct s_floor_data
 
 } t_floor_data;
 
+typedef struct s_fps
+{
+	struct timeval last_time;
+	int frame_count;
+	double fps;
+} t_fps;
+
 typedef struct s_cub3d
 {
-    void        *mlx;
-    void        *win;
-    void        *img;
+    void        	*mlx;
+    void        	*win;
+    void        	*img;
     
-    char        *data;
+    char        	*data;
     
-    int         bpp;
-    int         fd;
-    int         size_line;
-    int         endian;
+    int         	bpp;
+    int         	fd;
+    int         	size_line;
+    int         	endian;
     
-    t_player    player;
-    t_map       map;
-    t_ray       *ray;
+    t_player    	player;
+    t_map       	map;
+    t_ray       	*ray;
+	t_fps			fps_data;
+
+	t_sky_data		sky_data;
+	t_floor_data	floor_data;
 }              t_cub3d;
 
 #endif
