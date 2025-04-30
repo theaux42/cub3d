@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:22:51 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/29 11:19:53 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/30 10:40:32 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_cub3d	*empty_cub3d(void)
 	cub3d->img = NULL;
 	cub3d->fd = -1;
 	cub3d->map.map = NULL;
-
 	cub3d->map.width = 0;
 	cub3d->map.height = 0;
 	return (cub3d);
@@ -44,6 +43,13 @@ bool	init_minilibx(t_cub3d *cub3d)
 	if (!cub3d->data)
 		return (ft_dprintf(2, ERR_MINILIBX), true);
 	return (false);
+}
+
+void	init_cub3d_struct(t_cub3d *cub3d)
+{
+	init_fps_data(&cub3d->fps_data);
+	init_floor_data(&cub3d->floor_data);
+	init_sky_data(&cub3d->sky_data);
 }
 
 bool	init_cub3d(t_cub3d *cub3d, char *map_file)

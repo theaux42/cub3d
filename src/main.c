@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 01:50:06 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/29 17:20:36 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/30 10:30:02 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-#define MOUSE_SENSITIVITY 0.003
+#define MOUSE_SENSITIVITY 0.01
 
 int	on_mouse_move(int x, int y, t_cub3d *cub3d)
 {
@@ -40,28 +40,25 @@ int	on_mouse_move(int x, int y, t_cub3d *cub3d)
 	return (0);
 }
 
-void	draw_fps_counter(t_cub3d *cub3d)
+void	draw_fps_counter(t_cub3d *cub3d, t_fps *fps_data)
 {
-	static struct timeval	last_time = {0};
-	static int				frame_count = 0;
-	static double			fps = 0.0;
-	struct timeval			current_time;
-	double					elapsed;
-	char					display[32];
+	struct timeval	current_time;
+	double			elapsed;
+	char			display[32];
 
 	gettimeofday(&current_time, NULL);
-	if (last_time.tv_sec == 0)
-		last_time = current_time;
-	elapsed = (current_time.tv_sec - last_time.tv_sec) + ((current_time.tv_usec
-				- last_time.tv_usec) / 1000000.0);
-	frame_count++;
+	if (fps_data->last_time.tv_sec == 0)
+		fps_data->last_time = current_time;
+	elapsed = (current_time.tv_sec - fps_data->last_time.tv_sec)
+		+ ((current_time.tv_usec - fps_data->last_time.tv_usec) / 1000000.0);
+	fps_data->frame_count++;
 	if (elapsed >= 1.0)
 	{
-		fps = frame_count / elapsed;
-		last_time = current_time;
-		frame_count = 0;
+		fps_data->fps = fps_data->frame_count / elapsed;
+		fps_data->last_time = current_time;
+		fps_data->frame_count = 0;
 	}
-	snprintf(display, sizeof(display), "FPS: %i", (int)fps);
+	snprintf(display, sizeof(display), "FPS: %i", (int)fps_data->fps);
 	mlx_string_put(cub3d->mlx, cub3d->win, 10, 10, 0x00FFFFFF, display);
 }
 
@@ -72,7 +69,7 @@ int	render(t_cub3d *cub3d)
 	player_crosshair(cub3d);
 	draw_minimap(cub3d);
 	mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img, 0, 0);
-	draw_fps_counter(cub3d);
+	draw_fps_counter(cub3d, &cub3d->fps_data);
 	return (0);
 }
 

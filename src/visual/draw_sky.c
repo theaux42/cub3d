@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sky.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 18:55:02 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/29 15:27:04 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/30 10:32:17 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@ void	init_sky(t_cub3d *cub3d, t_sky_data *sky_data)
 
 void	vert_sky_cal(t_sky_data *sky_data, int x)
 {
-	sky_data->ang = sky_data->start_ang + ((double)x / (WIDTH - 1)) * sky_data->H_FOV;
+	sky_data->ang = sky_data->start_ang + ((double)x / (WIDTH - 1))
+		* sky_data->H_FOV;
 	sky_data->ang = fmod(sky_data->ang, 2.0 * PI);
 	if (sky_data->ang < 0)
 		sky_data->ang += 2.0 * PI;
-	sky_data->tex_pos.x = (int)((sky_data->ang / (2.0 * PI)) * sky_data->sky.width);
-	sky_data->tex_pos.x = (sky_data->tex_pos.x % sky_data->sky.width + sky_data->sky.width) % sky_data->sky.width;
+	sky_data->tex_pos.x = (int)((sky_data->ang / (2.0 * PI))
+			* sky_data->sky.width);
+	sky_data->tex_pos.x = (sky_data->tex_pos.x % sky_data->sky.width
+			+ sky_data->sky.width) % sky_data->sky.width;
 }
 
 void	horiz_sky_cal(t_cub3d *cub3d, t_sky_data *sky_data, int x, int y)
@@ -56,4 +59,3 @@ void	horiz_sky_cal(t_cub3d *cub3d, t_sky_data *sky_data, int x, int y)
 			sky_data->tex_pos.y}, sky_data->sky, (t_hit){0});
 	put_pixel((t_vec2){x, y}, sky_data->color, cub3d);
 }
-

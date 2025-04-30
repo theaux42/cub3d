@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 21:16:43 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/29 18:40:25 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/30 10:34:54 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ unsigned int	get_pixel_from_tex(t_vec2 pos, t_texture_struct tex, t_hit hit)
 	color = img[pos.y * tex.width + pos.x];
 	shade_factor = 1.0 - fmin(0.7, hit.dist / 15.0);
 	shade_factor = fmax(0.2, shade_factor);
-	direction_shade = 1.0;
+	direction_shade = 0.8;
 	if (hit.facing == NORTH || hit.facing == SOUTH)
 		direction_shade = 0.9;
-	else if (hit.facing == EAST || hit.facing == WEST)
-		direction_shade = 0.8;
 	shade_factor *= direction_shade;
 	rgb.r = ((color >> 16) & 0xFF) * shade_factor;
 	rgb.g = ((color >> 8) & 0xFF) * shade_factor;

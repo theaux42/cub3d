@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_doors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:20:05 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/29 15:03:24 by theaux           ###   ########.fr       */
+/*   Updated: 2025/04/30 10:31:00 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	manage_door(t_cub3d *cub3d, t_ray *ray)
 
 void	player_crosshair(t_cub3d *cub3d)
 {
-	t_ray ray_middle;
+	t_ray	ray_middle;
 
 	ray_middle = (t_ray){0};
 	perform_dda(cub3d, &ray_middle, WIDTH / 2, true);
