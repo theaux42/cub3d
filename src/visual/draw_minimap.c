@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_minimap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 17:14:53 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/30 10:32:02 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/05/01 18:59:03 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	draw_minimap(t_cub3d *cub3d)
 	map = &cub3d->map;
 	pos = (t_vec2){0, 0};
 	while (map->map[pos.y])
-	{	
+	{
 		while (map->map[pos.y][pos.x])
 		{
 			if (map->map[pos.y][pos.x] == '1')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:22:51 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/30 10:40:32 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/05/01 18:55:50 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	init_cub3d(t_cub3d *cub3d, char *map_file)
 		return (ft_dprintf(2, ERR_NO_FTYPE, ".cubonus"), true);
 	cub3d->fd = open(map_file, O_RDONLY);
 	if (cub3d->fd < 0)
-		return (ft_dprintf(2, "%s%s\n", DBG_MSG, strerror(errno)), true);
+		return (ft_dprintf(2, "%s%s\n", ERR_MSG, strerror(errno)), true);
 	if (init_minilibx(cub3d))
 		return (close(cub3d->fd), true);
 	cub3d->ray = (t_ray *)malloc(sizeof(t_ray));

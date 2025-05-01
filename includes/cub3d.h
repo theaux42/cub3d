@@ -3,37 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 23:00:45 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/07 23:00:45 by tbabou           ###   ########.fr       */
+/*   Created: 2025/05/01 18:21:34 by theaux            #+#    #+#             */
+/*   Updated: 2025/05/01 18:21:34 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <math.h>
-#include <string.h>
-#include <errno.h>
-#include <limits.h>
-#include <sys/types.h>
-#include <sys/time.h>
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include "mlx.h"
-#include "libft.h"
-
-#include "player.h"
-#include "parser.h"
-#include "define.h"
-#include "structs.h"
-#include "bonus.h"
-#include "visuals.h"
-
+# include "define.h"
+# include "libft.h"
+# include "mlx.h"
+# include "parser.h"
+# include "player.h"
+# include "structs.h"
+# include "visuals.h"
+# include <errno.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <math.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/time.h>
+# include <sys/types.h>
+# include <unistd.h>
 
 #endif

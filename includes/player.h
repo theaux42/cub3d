@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 15:03:55 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/28 01:54:57 by theaux           ###   ########.fr       */
+/*   Updated: 2025/05/01 18:27:22 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PLAYER_H
 
 # include "structs.h"
+# include <stdbool.h>
 
 void	empty_player(t_player *player);
 bool	init_player(char **map, t_player *player);

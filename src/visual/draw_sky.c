@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sky.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 18:55:02 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/30 10:32:17 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/05/01 17:59:57 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_sky(t_cub3d *cub3d, t_sky_data *sky_data)
 {
-	sky_data->H_FOV = PI / 2.0;
+	sky_data->h_fov = PI / 2.0;
 	sky_data->sky = cub3d->map.texture[CEILING_TEXTURE];
 	sky_data->half_h = HEIGHT / 2;
 	sky_data->horizon = sky_data->half_h - (int)cub3d->player.pitch;
@@ -24,14 +24,14 @@ void	init_sky(t_cub3d *cub3d, t_sky_data *sky_data)
 		sky_data->horizon = HEIGHT;
 	sky_data->horizon = 0 + ((double)sky_data->horizon / HEIGHT)
 		* (sky_data->sky.height - 1);
-	sky_data->start_ang = cub3d->player.angle - sky_data->H_FOV / 2.0;
+	sky_data->start_ang = cub3d->player.angle - sky_data->h_fov / 2.0;
 	sky_data->x = 0;
 }
 
 void	vert_sky_cal(t_sky_data *sky_data, int x)
 {
 	sky_data->ang = sky_data->start_ang + ((double)x / (WIDTH - 1))
-		* sky_data->H_FOV;
+		* sky_data->h_fov;
 	sky_data->ang = fmod(sky_data->ang, 2.0 * PI);
 	if (sky_data->ang < 0)
 		sky_data->ang += 2.0 * PI;

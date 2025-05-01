@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:28:11 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/30 10:41:25 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/05/01 17:59:57 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_sky_data(t_sky_data *sky)
 	sky->sky = (t_texture_struct){0};
 	sky->horizon = 0;
 	sky->half_h = 0;
-	sky->H_FOV = 0;
+	sky->h_fov = 0;
 	sky->ang = 0;
 	sky->tex_pos = (t_vec2){0, 0};
 	sky->start_ang = 0;

@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:57:53 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/27 03:43:42 by theaux           ###   ########.fr       */
+/*   Updated: 2025/05/01 18:00:27 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ static void	perform_initial_step(t_cub3d *cub3d, t_ray *ray)
 
 static void	perform_calculation(t_cub3d *cub3d, t_ray *ray, int x)
 {
-	ray->cameraX = 1 - 2 * x / (double)WIDTH;
+	ray->camera_x = 1 - 2 * x / (double)WIDTH;
 	ray->dir.x = cos(cub3d->player.angle) + cub3d->player.plane.x
-		* ray->cameraX;
+		* ray->camera_x;
 	ray->dir.y = sin(cub3d->player.angle) + cub3d->player.plane.y
-		* ray->cameraX;
+		* ray->camera_x;
 	ray->map_pos.x = (int)cub3d->player.pos.x;
 	ray->map_pos.y = (int)cub3d->player.pos.y;
 	ray->delta_dist = (t_dvec2){1e30, 1e30};
@@ -87,8 +87,8 @@ static void	calculate_hit_details(t_cub3d *cub3d, t_ray *ray)
 			ray->hit.facing = EAST;
 		else
 			ray->hit.facing = WEST;
-		ray->perpWallDist = ray->side_dist.x - ray->delta_dist.x;
-		ray->hit.x_wall = cub3d->player.pos.y + ray->perpWallDist * ray->dir.y;
+		ray->perpwalldist = ray->side_dist.x - ray->delta_dist.x;
+		ray->hit.x_wall = cub3d->player.pos.y + ray->perpwalldist * ray->dir.y;
 	}
 	else
 	{
@@ -96,12 +96,12 @@ static void	calculate_hit_details(t_cub3d *cub3d, t_ray *ray)
 			ray->hit.facing = SOUTH;
 		else
 			ray->hit.facing = NORTH;
-		ray->perpWallDist = ray->side_dist.y - ray->delta_dist.y;
-		ray->hit.x_wall = cub3d->player.pos.x + ray->perpWallDist * ray->dir.x;
+		ray->perpwalldist = ray->side_dist.y - ray->delta_dist.y;
+		ray->hit.x_wall = cub3d->player.pos.x + ray->perpwalldist * ray->dir.x;
 	}
 	ray->hit.pos = ray->map_pos;
 	ray->hit.x_wall -= floor(ray->hit.x_wall);
-	ray->hit.dist = ray->perpWallDist;
+	ray->hit.dist = ray->perpwalldist;
 	ray->hit.type = cub3d->map.map[(int)ray->hit.pos.y][(int)ray->hit.pos.x];
 	if (ray->hit.type == 'D')
 		ray->hit.is_door = true;
