@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_other.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:18:25 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/25 14:14:34 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/05/01 19:23:14 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ bool	check_map_unkn_char(t_map map)
 	{
 		while ((map.map[pos.y][pos.x]) && ft_isspace(map.map[pos.y][pos.x]))
 			pos.x++;
-		//&& (int)(ft_strlen(map.map[pos.y]) - (pos.x - 1)) > pos.x
 		while (map.map[pos.y][pos.x])
 		{
 			if (!ft_strchr(VALID_CHARS, map.map[pos.y][pos.x]))

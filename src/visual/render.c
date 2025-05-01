@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:59:07 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/24 20:47:49 by theaux           ###   ########.fr       */
+/*   Updated: 2025/05/01 19:19:14 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ void	perform_initial_step(t_cub3d *cub3d, t_ray *ray)
 
 void	perform_calculation(t_cub3d *cub3d, t_ray *ray, int x)
 {
-	ray->cameraX = 1 - 2 * x / (double)WIDTH;
+	ray->camera_x = 1 - 2 * x / (double)WIDTH;
 	ray->dir.x = cos(cub3d->player.angle) + cub3d->player.plane.x
-		* ray->cameraX;
+		* ray->camera_x;
 	ray->dir.y = sin(cub3d->player.angle) + cub3d->player.plane.y
-		* ray->cameraX;
+		* ray->camera_x;
 	ray->map_pos.x = (int)cub3d->player.pos.x;
 	ray->map_pos.y = (int)cub3d->player.pos.y;
 	ray->delta_dist = (t_dvec2){1e30, 1e30};

@@ -6,7 +6,7 @@
 /*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:57:53 by theaux            #+#    #+#             */
-/*   Updated: 2025/04/24 19:58:47 by theaux           ###   ########.fr       */
+/*   Updated: 2025/05/01 19:16:24 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static void	calculate_hit_details(t_cub3d *cub3d, t_ray *ray)
 			ray->hit.facing = EAST;
 		else
 			ray->hit.facing = WEST;
-		ray->perpWallDist = ray->side_dist.x - ray->delta_dist.x;
-		ray->hit.x_wall = cub3d->player.pos.y + ray->perpWallDist * ray->dir.y;
+		ray->perpwalldist = ray->side_dist.x - ray->delta_dist.x;
+		ray->hit.x_wall = cub3d->player.pos.y + ray->perpwalldist * ray->dir.y;
 	}
 	else
 	{
@@ -64,12 +64,12 @@ static void	calculate_hit_details(t_cub3d *cub3d, t_ray *ray)
 			ray->hit.facing = SOUTH;
 		else
 			ray->hit.facing = NORTH;
-		ray->perpWallDist = ray->side_dist.y - ray->delta_dist.y;
-		ray->hit.x_wall = cub3d->player.pos.x + ray->perpWallDist * ray->dir.x;
+		ray->perpwalldist = ray->side_dist.y - ray->delta_dist.y;
+		ray->hit.x_wall = cub3d->player.pos.x + ray->perpwalldist * ray->dir.x;
 	}
 	ray->hit.pos = ray->map_pos;
 	ray->hit.x_wall -= floor(ray->hit.x_wall);
-	ray->hit.dist = ray->perpWallDist;
+	ray->hit.dist = ray->perpwalldist;
 	ray->hit.type = cub3d->map.map[(int)ray->hit.pos.y][(int)ray->hit.pos.x];
 }
 
