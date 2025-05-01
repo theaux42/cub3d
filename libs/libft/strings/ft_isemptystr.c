@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isemptystr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:59:15 by tbabou            #+#    #+#             */
-/*   Updated: 2025/02/14 18:00:48 by tbabou           ###   ########.fr       */
+/*   Updated: 2025/05/01 17:55:59 by theaux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_isemptystr(char *str)
+int	ft_isemptystr(char *str)
 {
-    int i;
+	int i;
 
-    if (!str)
-        return (0);
-    i = 0;
-    while (str[i])
-    {
-        if (!ft_isspace(str[i]))
-            return (0);
-        i++;
-    }
-    return (1);
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isspace(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
