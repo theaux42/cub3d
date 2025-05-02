@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_settings.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: theaux <theaux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbabou <tbabou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 17:34:36 by tbabou            #+#    #+#             */
-/*   Updated: 2025/04/29 18:58:23 by theaux           ###   ########.fr       */
+/*   Updated: 2025/05/02 11:26:17 by tbabou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static bool	parse_textures(t_cub3d *cub3d, char *line, int target)
 		cub3d->map.texture[target].path = ft_strtrim(line, " \t\n\r");
 		if (!cub3d->map.texture[target].path)
 			return (ft_dprintf(2, DBG_MALLOC), true);
-		ft_printf("[%i] Texture %s\n", target, cub3d->map.texture[target].path);
 	}
 	return (false);
 }

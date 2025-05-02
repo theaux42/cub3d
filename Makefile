@@ -80,7 +80,7 @@ BONUS_OBJS   = $(BONUS_SRCS:.c=.o)
 
 all: $(OUTPUT)
 
-bonus:
+bonus: clean
 	$(MAKE) MODE=bonus $(OUTPUT)
 
 $(OUTPUT): $(OBJS)
